@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pre-dex-items>
+
+    <item
+        dex="/home/ololoev/projects/ZMPlayer2/ZMPlayer2/build/pre-dexed/debug/support-v4-19.1.0-838cdc03d2d5949247e08605e255e9a61911a985.jar"
+        jar="/home/ololoev/android_studio/sdk/extras/android/m2repository/com/android/support/support-v4/19.1.0/support-v4-19.1.0.jar"
+        jumboMode="false"
+        revision="19.0.3"
+        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
+
+</pre-dex-items>
