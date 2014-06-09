@@ -5,7 +5,6 @@
     android:layout_height="match_parent">
     <LinearLayout
         android:orientation="horizontal"
-        android:background="@drawable/btn_library_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
@@ -15,11 +14,12 @@
             android:layout_height="50dp" />
         <LinearLayout
             android:id="@+id/tv"
+            android:background="@drawable/btn_library_item"
             android:orientation="vertical"
             android:paddingLeft="10dp"
             android:gravity="left|center_vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="match_parent" >
             <TextView
                 android:id="@+id/albumName"
                 android:gravity="left|center_vertical"

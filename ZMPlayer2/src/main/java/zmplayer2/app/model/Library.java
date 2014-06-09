@@ -162,11 +162,15 @@ public class Library extends Item {
                     .getColumnIndex(MediaStore.Audio.Media.DURATION);
             int sourceColumn = cursor
                     .getColumnIndex(MediaStore.Audio.Media.DATA);
+            int artistColumn = cursor
+                    .getColumnIndex(MediaStore.Audio.Media.ARTIST);
+            int albumColumn = cursor
+                    .getColumnIndex(MediaStore.Audio.Media.ALBUM);
             do {
                 if (album != null) {
-                    album.addChild(new Song(cursor.getString(titleColumn), cursor.getString(sourceColumn), cursor.getLong(durationColumn), album));
+                    album.addChild(new Song(cursor.getString(titleColumn), cursor.getString(albumColumn), cursor.getString(artistColumn), cursor.getString(sourceColumn), cursor.getLong(durationColumn), album));
                 } else {
-                    this.getChilds().get(2).addChild(new Song(cursor.getString(titleColumn), cursor.getString(sourceColumn), cursor.getLong(durationColumn), album));
+                    this.getChilds().get(2).addChild(new Song(cursor.getString(titleColumn), cursor.getString(albumColumn), cursor.getString(artistColumn), cursor.getString(sourceColumn), cursor.getLong(durationColumn), this.getChilds().get(2)));
                 }
             } while (cursor.moveToNext());
         }

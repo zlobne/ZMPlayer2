@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 
 import zmplayer2.app.R;
+import zmplayer2.app.player.MusicPlayer;
 
 
 public class MainActivity extends Activity
@@ -29,7 +30,7 @@ public class MainActivity extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        MusicPlayer.instance(this);
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -110,6 +111,10 @@ public class MainActivity extends Activity
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
+        }
+
+        if (id == R.id.action_quit) {
+            System.exit(0);
         }
         return super.onOptionsItemSelected(item);
     }

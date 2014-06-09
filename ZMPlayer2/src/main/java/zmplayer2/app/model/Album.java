@@ -1,11 +1,14 @@
 package zmplayer2.app.model;
 
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.io.File;
 
 import zmplayer2.app.R;
 
@@ -15,6 +18,7 @@ import zmplayer2.app.R;
 public class Album extends Item {
 
     private String albumArt;
+    private Bitmap albumCover;
 
     public Album(String name, Item parent) {
         super(name, parent);
@@ -23,6 +27,14 @@ public class Album extends Item {
     public Album(String name, String albumArt, Item parent) {
         super(name, parent);
         this.albumArt = albumArt;
+    }
+
+    public Bitmap getAlbumCover() {
+        return albumCover;
+    }
+
+    public void setAlbumCover(Bitmap albumCover) {
+        this.albumCover = albumCover;
     }
 
     @Override
@@ -41,9 +53,19 @@ public class Album extends Item {
         TextView albumCount = (TextView) view.findViewById(R.id.tracksCount);
         albumCount.setText(getChilds().size() + " " + inflater.getContext().getString(R.string.tracks_count));
         ImageView cover = (ImageView) view.findViewById(R.id.cover);
+
+        if (albumArt == null || albumArt.isEmpty()) {
+            if (getChilds() != null && ! getChilds().isEmpty()) {
+                albumArt = new File(((Song) getChilds().get(0)).getSource()).getParent() + "/cover.jpg";
+            }
+        }
+
         if (albumArt != null &&
                 !albumArt.isEmpty()) {
-            cover.setImageBitmap(BitmapFactory.decodeFile(albumArt));
+            if (albumCover == null) {
+                albumCover = BitmapFactory.decodeFile(albumArt);
+            }
+            cover.setImageBitmap(albumCover);
         }
         viewGroup.addView(view);
     }

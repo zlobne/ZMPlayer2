@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import zmplayer2.app.R;
+import zmplayer2.app.player.MusicPlayer;
 import zmplayer2.app.tools.Utils;
 
 /**
@@ -16,6 +17,9 @@ public class Song extends Item {
 
     private long duration;
     private String source;
+
+    private String albumName;
+    private String artistName;
 
     public Song(String name, Item parent) {
         super(name, parent);
@@ -27,12 +31,32 @@ public class Song extends Item {
         this.source = source;
     }
 
+    public Song(String name, String albumName, String artistName, String source, long duration, Item parent) {
+        super(name, parent);
+        this.duration = duration;
+        this.source = source;
+        this.albumName = albumName;
+        this.artistName = artistName;
+    }
+
     public long getDuration() {
         return duration;
     }
 
     public String getSource() {
         return source;
+    }
+
+    public String getAlbumName() {
+        return albumName;
+    }
+
+    public String getArtistName() {
+        return artistName;
+    }
+
+    public Song getSelf() {
+        return this;
     }
 
     @Override
@@ -42,8 +66,10 @@ public class Song extends Item {
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setChanged();
-                notifyObservers();
+//                setChanged();
+//                notifyObservers();
+                MusicPlayer.instance().setSong(getSelf());
+                MusicPlayer.instance().play();
             }
         });
         TextView songName = (TextView) view.findViewById(R.id.artistName);
