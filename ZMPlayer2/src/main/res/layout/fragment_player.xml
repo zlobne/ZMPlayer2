@@ -1,12 +1,95 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity$PlaceholderFragment">
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/albumArt"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:animateLayoutChanges="true"
+        android:layout_weight="4"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
 
     <TextView
-        android:id="@+id/section_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:id="@+id/titleBar1"
+        style="@style/Text.Big"
+        android:gravity="center"
+        android:layout_weight="0.5"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/titleBar2"
+        style="@style/Text.Big.Italic"
+        android:gravity="center"
+        android:layout_weight="0.5"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <ImageButton
+            android:id="@+id/prevBtn"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:src="@drawable/btn_prev"
+            android:scaleType="fitCenter"
+            android:padding="10dp"
+            android:background="@android:color/transparent"
+            android:layout_height="match_parent" />
+        <ImageButton
+            style="@style/ButtonBorderless.NoClick"
+            android:id="@+id/playPauseBtn"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:src="@drawable/btn_play"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"
+            android:layout_height="match_parent" />
+        <ImageButton
+            android:id="@+id/nextBtn"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:src="@drawable/btn_next"
+            android:scaleType="fitCenter"
+            android:padding="10dp"
+            android:background="@android:color/transparent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_marginTop="20dp"
+        android:progressDrawable="@drawable/progressbar"
+        android:thumb="@null"
+        android:progress="50"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:layout_weight="0.5"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:indeterminate="false" />
+    <LinearLayout
+        android:layout_weight="0.5"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <TextView
+            android:id="@+id/current"
+            android:gravity="left"
+            android:paddingLeft="10dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/full"
+            android:gravity="right"
+            android:paddingRight="10dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</LinearLayout>

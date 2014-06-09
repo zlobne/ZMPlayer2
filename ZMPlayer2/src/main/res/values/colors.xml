@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="live_window_title">#CC201600</color>
+    <color name="main_background">#FF48443E</color>
+    <color name="black_transparent">#80000000</color>
+    <color name="border_green">#FFD5DE4F</color>
+    <color name="green">#FFD4DE4E</color>
+    <color name="gray">#FF6B6966</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="zmp_orange">#FFFFB100</color>
+
+</resources>

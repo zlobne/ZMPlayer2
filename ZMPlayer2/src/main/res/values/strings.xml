@@ -3,7 +3,7 @@
 
     <!--sorted by alphabetical order-->
 
-    <string name="action_example">Example action</string>
+    <string name="action_example">Up</string>
     <string name="action_settings">Settings</string>
     <string name="album_count">albums</string>
     <string name="albums">Albums</string>

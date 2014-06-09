@@ -5,4 +5,27 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="ButtonBorderless" parent="@android:style/Widget.DeviceDefault.Button.Borderless">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="ButtonBorderless.NoClick" parent="@android:style/Widget.DeviceDefault.Button.Borderless">
+        <item name="android:animateOnClick">false</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="Text" >
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="Text.Big">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Text.Big.Italic">
+        <item name="android:textStyle">italic</item>
+    </style>
+
 </resources>

@@ -3,7 +3,7 @@
 
     <!--sorted by alphabetical order-->
 
-    <string name="action_example">Example action</string>
+    <string name="action_example">Вверх</string>
     <string name="action_settings">Настройки</string>
     <string name="album_count">albums</string>
     <string name="albums">Альбомы</string>
