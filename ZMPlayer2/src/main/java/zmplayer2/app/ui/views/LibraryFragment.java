@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import zmplayer2.app.R;
 import zmplayer2.app.ui.controllers.LibraryController;
@@ -19,6 +20,7 @@ public class LibraryFragment extends Fragment {
     private LayoutInflater inflater;
 
     private ViewGroup viewGroup;
+    private Button backBtn;
 
     private LibraryController libraryController;
 
@@ -46,6 +48,13 @@ public class LibraryFragment extends Fragment {
 
     private void initViews(View rootView) {
         viewGroup = (ViewGroup) rootView.findViewById(R.id.vg);
+        backBtn = (Button) rootView.findViewById(R.id.backBtn);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                libraryController.backPress();
+            }
+        });
     }
 
     @Override

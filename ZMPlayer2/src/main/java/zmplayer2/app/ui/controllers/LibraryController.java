@@ -2,7 +2,9 @@ package zmplayer2.app.ui.controllers;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -38,6 +40,14 @@ public class LibraryController implements Observer {
         for (Item item : currentRoot.getChilds()) {
             item.draw(viewGroup, inflater);
         }
+
+//        Button button = (Button) ((View)viewGroup.getParent()).findViewById(R.id.backBtn);
+//
+//        if (currentRoot == Library.instance(context)) {
+//            button.setVisibility(View.GONE);
+//        } else {
+//            button.setVisibility(View.VISIBLE);
+//        }
     }
 
     @Override
@@ -52,6 +62,12 @@ public class LibraryController implements Observer {
     private void subscribe(Item currentItem) {
         for (Item item : currentItem.getChilds()) {
             item.addObserver(this);
+        }
+    }
+
+    public void backPress() {
+        if (currentRoot.getParent() != null) {
+            currentRoot = currentRoot.getParent();
         }
     }
 }
