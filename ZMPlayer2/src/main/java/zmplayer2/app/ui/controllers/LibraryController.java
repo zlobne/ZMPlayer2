@@ -1,32 +1,35 @@
 package zmplayer2.app.ui.controllers;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import java.util.Observable;
 import java.util.Observer;
 
+import zmplayer2.app.R;
 import zmplayer2.app.model.Item;
+import zmplayer2.app.model.Library;
 
 /**
  * Created by Anton Prozorov on 06.06.14.
  */
+
 public class LibraryController implements Observer {
+
+    private Context context;
 
     private ViewGroup viewGroup;
     private LayoutInflater inflater;
 
-    private final Item libraryRoot = new Item("Library root", null);
     private Item currentRoot;
 
-    public LibraryController(ViewGroup viewGroup, LayoutInflater inflater) {
+    public LibraryController(ViewGroup viewGroup, LayoutInflater inflater, Context context) {
         this.viewGroup = viewGroup;
         this.inflater = inflater;
-        libraryRoot.addChild(new Item("Artists", libraryRoot));
-        libraryRoot.addChild(new Item("Albums", libraryRoot));
-        libraryRoot.addChild(new Item("Tracks", libraryRoot));
+        this.context = context;
 
-        currentRoot = libraryRoot;
+        currentRoot = Library.instance(context);
 
         subscribe(currentRoot);
     }

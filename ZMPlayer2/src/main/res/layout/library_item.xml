@@ -4,16 +4,17 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--<ImageView-->
-        <!--android:background="@android:color/black"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="2dp" />-->
     <Button
         android:id="@+id/tv"
         android:paddingLeft="10dp"
         android:background="@drawable/btn_library_item"
         android:gravity="left|center_vertical"
+        style="@android:style/TextAppearance.DeviceDefault.Medium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    <ImageView
+        android:background="@android:color/darker_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
 
 </LinearLayout>

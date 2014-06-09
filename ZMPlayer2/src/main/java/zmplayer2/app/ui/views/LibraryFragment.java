@@ -39,7 +39,7 @@ public class LibraryFragment extends Fragment {
         this.inflater = inflater;
         View rootView = inflater.inflate(R.layout.fragment_library, container, false);
         initViews(rootView);
-        libraryController = new LibraryController(viewGroup, inflater);
+        libraryController = new LibraryController(viewGroup, inflater, getActivity().getApplicationContext());
         libraryController.draw();
         return rootView;
     }

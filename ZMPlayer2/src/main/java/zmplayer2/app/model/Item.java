@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Observable;
 import java.util.Observer;
@@ -18,7 +19,7 @@ import zmplayer2.app.R;
 public class Item extends Observable{
     private String name;
     private Item parent;
-    private LinkedHashSet<Item> childs = new LinkedHashSet<Item>();
+    private ArrayList<Item> childs = new ArrayList<Item>();
 
     public Item(String name, Item parent) {
         this.name = name;
@@ -29,7 +30,7 @@ public class Item extends Observable{
         childs.add(child);
     }
 
-    public LinkedHashSet<Item> getChilds() {
+    public ArrayList<Item> getChilds() {
         return childs;
     }
 
@@ -37,10 +38,14 @@ public class Item extends Observable{
         return parent;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void draw(ViewGroup viewGroup, LayoutInflater inflater) {
         View view = inflater.inflate(R.layout.library_item, null);
         Button tv = (Button) view.findViewById(R.id.tv);
-        tv.setText(name);
+        tv.setText(getName());
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
