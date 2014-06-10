@@ -41,7 +41,6 @@ import zmplayer2.app.ui.controllers.PlayerController;
 public class PlayerFragment extends Fragment implements Observer, DownloadTask.DownloadTaskListener {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
-    private Song song;
     private PlayerController playerController;
 
     private ViewGroup albumArt;
@@ -57,6 +56,7 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
     private View rootView;
 
     private boolean interrupted = false;
+    private boolean paused = false;
 
     public static PlayerFragment newInstance(int sectionNumber) {
         PlayerFragment fragment = new PlayerFragment();
@@ -181,7 +181,7 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
                 @Override
                 public void run() {
                     while (!interrupted) {
-                        if (MusicPlayer.instance().isPlaying()) {
+                        if (MusicPlayer.instance().isPlaying() && !paused) {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -204,10 +204,7 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
 
     private void addImage(Bitmap bitmap) {
 
-        ImageView imageView = new ImageView(getActivity());
-        imageView.setMinimumHeight(albumArt.getHeight());
-        imageView.setMinimumWidth(albumArt.getWidth());
-        imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        ImageView imageView = (ImageView) getActivity().getLayoutInflater().inflate(R.layout.album_view, null);
         imageView.setImageBitmap(bitmap);
         albumArt.addView(imageView);
     }
@@ -221,6 +218,20 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
     public void onPause() {
         super.onPause();
         MusicPlayer.instance().deleteObserver(this);
+        paused = true;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MusicPlayer.instance().addObserver(this);
+        paused = false;
+        interrupted = false;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
         interrupted = true;
     }
 

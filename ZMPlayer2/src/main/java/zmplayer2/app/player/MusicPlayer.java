@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
+import android.util.Log;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -204,6 +205,7 @@ public class MusicPlayer extends Observable {
                 try {
                     HttpResponse response = httpClient.execute(httpGet);
                     String result = EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
+                    Log.d("trololoq", result);
                     AlbumInfo info = JsonParser.parseAlbumInfo(result);
                     new DownloadTask(listener).execute(info.getAlbum().getImages().get(3).getText(), filename);
                 } catch (Exception e) {
