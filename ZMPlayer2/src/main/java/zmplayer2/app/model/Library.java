@@ -123,10 +123,12 @@ public class Library extends Item {
         if (artist != null) {
             for (Item item : artist.getChilds()) {
                 createTracks(context, item);
+                ((Album) item).findAlbumCover();
             }
         } else {
             for (Item item : this.getChilds().get(1).getChilds()) {
                 createTracks(context, item);
+                ((Album) item).findAlbumCover();
             }
         }
     }

@@ -37,6 +37,16 @@ public class Album extends Item {
         this.albumCover = albumCover;
     }
 
+    public void findAlbumCover() {
+        if (albumArt == null || albumArt.isEmpty()) {
+            if (getChilds() != null && ! getChilds().isEmpty()) {
+                albumArt = new File(((Song) getChilds().get(0)).getSource()).getParent() + "/cover.jpg";
+            }
+        }
+
+        albumCover = BitmapFactory.decodeFile(albumArt);
+    }
+
     @Override
     public void draw(ViewGroup viewGroup, LayoutInflater inflater) {
         View view = inflater.inflate(R.layout.album_item, null);
@@ -54,17 +64,7 @@ public class Album extends Item {
         albumCount.setText(getChilds().size() + " " + inflater.getContext().getString(R.string.tracks_count));
         ImageView cover = (ImageView) view.findViewById(R.id.cover);
 
-        if (albumArt == null || albumArt.isEmpty()) {
-            if (getChilds() != null && ! getChilds().isEmpty()) {
-                albumArt = new File(((Song) getChilds().get(0)).getSource()).getParent() + "/cover.jpg";
-            }
-        }
-
-        if (albumArt != null &&
-                !albumArt.isEmpty()) {
-            if (albumCover == null) {
-                albumCover = BitmapFactory.decodeFile(albumArt);
-            }
+        if (albumCover != null) {
             cover.setImageBitmap(albumCover);
         }
         viewGroup.addView(view);
