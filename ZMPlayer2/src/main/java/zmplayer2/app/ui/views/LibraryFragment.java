@@ -8,13 +8,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import zmplayer2.app.R;
 import zmplayer2.app.ui.controllers.LibraryController;
 
 /**
  * Created by Anton Prozorov on 06.06.14.
  */
-public class LibraryFragment extends Fragment {
+public class LibraryFragment extends Fragment implements Observer {
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     private LayoutInflater inflater;
@@ -42,6 +45,7 @@ public class LibraryFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_library, container, false);
         initViews(rootView);
         libraryController = new LibraryController(viewGroup, inflater, getActivity().getApplicationContext());
+        libraryController.addObserver(this);
         libraryController.draw();
         return rootView;
     }
@@ -62,5 +66,28 @@ public class LibraryFragment extends Fragment {
         super.onAttach(activity);
         ((MainActivity) activity).onSectionAttached(
                 getArguments().getInt(ARG_SECTION_NUMBER));
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (libraryController != null) {
+            libraryController.deleteObserver(this);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (libraryController != null) {
+            libraryController.addObserver(this);
+        }
+    }
+
+    @Override
+    public void update(Observable observable, Object o) {
+        if (o != null) {
+            ((MainActivity) getActivity()).onNavigationDrawerItemSelected(2);
+        }
     }
 }

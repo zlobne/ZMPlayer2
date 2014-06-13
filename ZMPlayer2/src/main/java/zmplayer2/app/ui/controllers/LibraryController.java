@@ -17,7 +17,7 @@ import zmplayer2.app.model.Library;
  * Created by Anton Prozorov on 06.06.14.
  */
 
-public class LibraryController implements Observer {
+public class LibraryController extends Observable implements Observer {
 
     private Context context;
 
@@ -52,11 +52,15 @@ public class LibraryController implements Observer {
 
     @Override
     public void update(Observable observable, Object data) {
-        currentRoot = (Item) observable;
-        subscribe(currentRoot);
-        viewGroup.removeAllViews();
-        draw();
-
+        if (data == null) {
+            currentRoot = (Item) observable;
+            subscribe(currentRoot);
+            viewGroup.removeAllViews();
+            draw();
+        } else {
+            setChanged();
+            notifyObservers(data);
+        }
     }
 
     private void subscribe(Item currentItem) {

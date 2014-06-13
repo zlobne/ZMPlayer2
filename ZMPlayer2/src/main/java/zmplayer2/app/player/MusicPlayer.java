@@ -77,6 +77,9 @@ public class MusicPlayer extends Observable {
     }
 
     public void setSong(Song song) {
+        if (this.song == song) {
+            return;
+        }
         this.song = song;
         this.album = song.getParent();
         if (album != null) {
@@ -94,7 +97,9 @@ public class MusicPlayer extends Observable {
     }
 
     public void play() {
-        mediaPlayer.start();
+        if (!mediaPlayer.isPlaying()) {
+            mediaPlayer.start();
+        }
     }
 
     public void playPause() {

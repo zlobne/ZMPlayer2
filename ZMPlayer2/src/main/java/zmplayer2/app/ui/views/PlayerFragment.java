@@ -225,6 +225,7 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
     public void onResume() {
         super.onResume();
         MusicPlayer.instance().addObserver(this);
+        initViews(rootView);
         paused = false;
         interrupted = false;
     }

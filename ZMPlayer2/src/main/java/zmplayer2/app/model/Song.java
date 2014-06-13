@@ -66,8 +66,8 @@ public class Song extends Item {
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                setChanged();
-//                notifyObservers();
+                setChanged();
+                notifyObservers(1);
                 MusicPlayer.instance().setSong(getSelf());
                 MusicPlayer.instance().play();
             }
