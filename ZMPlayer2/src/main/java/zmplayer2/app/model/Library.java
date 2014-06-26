@@ -106,11 +106,17 @@ public class Library extends Item {
                     .getColumnIndex(MediaStore.Audio.Albums.ALBUM);
             int artColumn = cursor
                     .getColumnIndex(MediaStore.Audio.Albums.ALBUM_ART);
+            int artistColumn = cursor
+                    .getColumnIndex(MediaStore.Audio.Albums.ARTIST);
             do {
                 if (artist != null) {
-                    artist.addChild(new Album(cursor.getString(titleColumn), cursor.getString(artColumn), artist));
+                    Album album = new Album(cursor.getString(titleColumn), cursor.getString(artColumn), artist);
+                    album.setArtistName(cursor.getString(artistColumn));
+                    artist.addChild(album);
                 } else {
-                    this.getChilds().get(1).addChild(new Album(cursor.getString(titleColumn), cursor.getString(artColumn), this.getChilds().get(1)));
+                    Album album = new Album(cursor.getString(titleColumn), cursor.getString(artColumn), this.getChilds().get(1));
+                    album.setArtistName(cursor.getString(artistColumn));
+                    this.getChilds().get(1).addChild(album);
                 }
                 // ...process entry...
             } while (cursor.moveToNext());
@@ -122,24 +128,25 @@ public class Library extends Item {
 
         if (artist != null) {
             for (Item item : artist.getChilds()) {
-                createTracks(context, item);
+                createTracks(context, (Album) item);
                 ((Album) item).findAlbumCover();
             }
         } else {
             for (Item item : this.getChilds().get(1).getChilds()) {
-                createTracks(context, item);
+                createTracks(context, (Album) item);
                 ((Album) item).findAlbumCover();
             }
         }
     }
 
-    private void createTracks(Context context, Item album) {
+    private void createTracks(Context context, Album album) {
         ContentResolver contentResolver;
         Uri uri;
         Cursor cursor;
         String where = null;
         if (album != null) {
-            where = MediaStore.Audio.Media.ALBUM + " = '" + album.getName().replace("'", "''") + "'";
+            where = MediaStore.Audio.Media.ALBUM + " = '" + album.getName().replace("'", "''")
+                    + "' and " + MediaStore.Audio.Media.ARTIST + " = '" + album.getArtistName().replace("'","''") + "'";
         }
         Log.d("ololo", "tracks");
         // Library

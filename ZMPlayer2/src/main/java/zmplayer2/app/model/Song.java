@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import zmplayer2.app.Core;
 import zmplayer2.app.R;
 import zmplayer2.app.player.MusicPlayer;
 import zmplayer2.app.tools.Utils;
@@ -68,8 +69,10 @@ public class Song extends Item {
             public void onClick(View v) {
                 setChanged();
                 notifyObservers(1);
-                MusicPlayer.instance().setSong(getSelf());
-                MusicPlayer.instance().play();
+                Core.instance().getPlayerService().getMusicPlayer().setSong(getSelf());
+                Core.instance().getPlayerService().getMusicPlayer().play();
+//                MusicPlayer.instance().setSong(getSelf());
+//                MusicPlayer.instance().play();
             }
         });
         TextView songName = (TextView) view.findViewById(R.id.artistName);

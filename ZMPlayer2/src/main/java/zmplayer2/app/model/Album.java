@@ -18,6 +18,7 @@ import zmplayer2.app.R;
 public class Album extends Item {
 
     private String albumArt;
+    private String artistName;
     private Bitmap albumCover;
 
     public Album(String name, Item parent) {
@@ -45,6 +46,17 @@ public class Album extends Item {
         }
 
         albumCover = BitmapFactory.decodeFile(albumArt);
+        if (albumCover != null) {
+            albumCover = Bitmap.createScaledBitmap(albumCover, 400, 400, false);
+        }
+    }
+
+    public void setArtistName(String artistName) {
+        this.artistName = artistName;
+    }
+
+    public String getArtistName() {
+        return artistName;
     }
 
     @Override

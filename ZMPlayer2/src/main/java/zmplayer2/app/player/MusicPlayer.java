@@ -27,7 +27,10 @@ import zmplayer2.app.net.DownloadTask;
  */
 public class MusicPlayer extends Observable {
 
-    private static MusicPlayer self;
+//    private static MusicPlayer self;
+
+    public final static int HEADPHONES = 0;
+    public final static int CALL = 1;
 
     private MediaPlayer mediaPlayer;
 
@@ -35,7 +38,10 @@ public class MusicPlayer extends Observable {
     private Item album;
     private Item artist;
 
-    protected MusicPlayer() {
+    private boolean[] wasPaused = {false, false};
+    private boolean wasPlaying = false;
+
+    public MusicPlayer() {
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
@@ -43,17 +49,7 @@ public class MusicPlayer extends Observable {
                 nextSong(true);
             }
         });
-    }
 
-    public static MusicPlayer instance(Context context) {
-        if (self == null) {
-            self = new MusicPlayer();
-        }
-        return self;
-    }
-
-    public static MusicPlayer instance() {
-        return self;
     }
 
     public boolean isPlaying() {
@@ -102,7 +98,37 @@ public class MusicPlayer extends Observable {
         }
     }
 
+    public void play(int sender) {
+        try {
+            wasPaused[sender] = false;
+            if (!wasPaused[Math.abs(sender - 1)] && wasPlaying) {
+                mediaPlayer.start();
+                wasPlaying = false;
+                setChanged();
+                notifyObservers();
+            }
+        } catch (Exception e) {
+            Log.d("exception", " " + e.getMessage());
+        }
+    }
+
+    public void pause(int sender) {
+        try {
+            if (mediaPlayer.isPlaying()) {
+                wasPlaying = true;
+            }
+            mediaPlayer.pause();
+            wasPaused[sender] = true;
+            setChanged();
+            notifyObservers();
+        } catch (Exception e) {
+            Log.d("exception", " " + e.getMessage());
+        }
+    }
+
     public void playPause() {
+        wasPaused[0] = false;
+        wasPaused[1] = false;
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.pause();
         } else {

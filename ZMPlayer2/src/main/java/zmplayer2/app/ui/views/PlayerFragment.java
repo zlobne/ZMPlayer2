@@ -27,6 +27,7 @@ import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
 
+import zmplayer2.app.Core;
 import zmplayer2.app.R;
 import zmplayer2.app.model.Album;
 import zmplayer2.app.model.Song;
@@ -75,7 +76,7 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
         View rootView = inflater.inflate(R.layout.fragment_player, container, false);
         this.rootView = rootView;
         playerController = new PlayerController();
-        MusicPlayer.instance().addObserver(this);
+        Core.instance().getPlayerService().getMusicPlayer().addObserver(this);
         initViews(rootView);
         return rootView;
     }
@@ -90,18 +91,18 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
     private void initViews(View view) {
         albumArt = (ViewGroup) view.findViewById(R.id.albumArt);
         albumArt.removeAllViews();
-        if (MusicPlayer.instance().getSong() != null) {
+        if (Core.instance().getPlayerService().getMusicPlayer().getSong() != null) {
             Bitmap albumCover = null;
-            if (MusicPlayer.instance().getSong().getParent() != null
-                    && MusicPlayer.instance().getSong().getParent().getParent() != null) {
+            if (Core.instance().getPlayerService().getMusicPlayer().getSong().getParent() != null
+                    && Core.instance().getPlayerService().getMusicPlayer().getSong().getParent().getParent() != null) {
                 try {
-                    albumCover = ((Album) MusicPlayer.instance().getSong().getParent()).getAlbumCover();
+                    albumCover = ((Album) Core.instance().getPlayerService().getMusicPlayer().getSong().getParent()).getAlbumCover();
                 } catch (Exception e) {
                     Log.d("ololo", e.getLocalizedMessage());
                 }
             }
             if (albumCover == null) {
-                File song = new File(MusicPlayer.instance().getSong().getSource());
+                File song = new File(Core.instance().getPlayerService().getMusicPlayer().getSong().getSource());
                 String filename = song.getParent() + "/cover.jpg";
                 Log.d("ololo", "cover " + filename);
                 final File coverArt = new File(filename);
@@ -127,14 +128,16 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
             }
         });
         playPauseBtn = (ImageButton) view.findViewById(R.id.playPauseBtn);
-        if (MusicPlayer.instance().isPlaying()) {
+        if (Core.instance().getPlayerService().getMusicPlayer().isPlaying()) {
             playPauseBtn.setImageResource(R.drawable.btn_pause);
+        } else {
+            playPauseBtn.setImageResource(R.drawable.btn_play);
         }
         playPauseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 playerController.playPause();
-                if (MusicPlayer.instance().isPlaying()) {
+                if (Core.instance().getPlayerService().getMusicPlayer().isPlaying()) {
                     playPauseBtn.setImageResource(R.drawable.btn_pause);
                 } else {
                     playPauseBtn.setImageResource(R.drawable.btn_play);
@@ -170,24 +173,24 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
         currentTime = (TextView) view.findViewById(R.id.current);
         fullTime = (TextView) view.findViewById(R.id.full);
 
-        if (MusicPlayer.instance().getSong() != null) {
-            titleBar1.setText(MusicPlayer.instance().getSong().getName());
-            titleBar2.setText(MusicPlayer.instance().getSong().getArtistName() + " - "
-                    + MusicPlayer.instance().getSong().getAlbumName());
-            currentTime.setText(Utils.prettyTime(MusicPlayer.instance().getCurrentPosition()));
-            fullTime.setText(Utils.prettyTime(MusicPlayer.instance().getDuration()));
+        if (Core.instance().getPlayerService().getMusicPlayer().getSong() != null) {
+            titleBar1.setText(Core.instance().getPlayerService().getMusicPlayer().getSong().getName());
+            titleBar2.setText(Core.instance().getPlayerService().getMusicPlayer().getSong().getArtistName() + " - "
+                    + Core.instance().getPlayerService().getMusicPlayer().getSong().getAlbumName());
+            currentTime.setText(Utils.prettyTime(Core.instance().getPlayerService().getMusicPlayer().getCurrentPosition()));
+            fullTime.setText(Utils.prettyTime(Core.instance().getPlayerService().getMusicPlayer().getDuration()));
 
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     while (!interrupted) {
-                        if (MusicPlayer.instance().isPlaying() && !paused) {
+                        if (Core.instance().getPlayerService().getMusicPlayer().isPlaying() && !paused) {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    fullTime.setText(Utils.prettyTime(MusicPlayer.instance().getDuration()));
-                                    currentTime.setText(Utils.prettyTime(MusicPlayer.instance().getCurrentPosition()));
-                                    seekBar.setProgress((int) ((float) MusicPlayer.instance().getCurrentPosition() / (float) MusicPlayer.instance().getDuration() * 100.0));
+                                    fullTime.setText(Utils.prettyTime(Core.instance().getPlayerService().getMusicPlayer().getDuration()));
+                                    currentTime.setText(Utils.prettyTime(Core.instance().getPlayerService().getMusicPlayer().getCurrentPosition()));
+                                    seekBar.setProgress((int) ((float) Core.instance().getPlayerService().getMusicPlayer().getCurrentPosition() / (float) Core.instance().getPlayerService().getMusicPlayer().getDuration() * 100.0));
                                 }
                             });
                             try {
@@ -217,14 +220,14 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
     @Override
     public void onPause() {
         super.onPause();
-        MusicPlayer.instance().deleteObserver(this);
+        Core.instance().getPlayerService().getMusicPlayer().deleteObserver(this);
         paused = true;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        MusicPlayer.instance().addObserver(this);
+        Core.instance().getPlayerService().getMusicPlayer().addObserver(this);
         initViews(rootView);
         paused = false;
         interrupted = false;
