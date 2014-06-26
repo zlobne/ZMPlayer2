@@ -7,6 +7,8 @@
     <color name="green">#FFD4DE4E</color>
     <color name="gray">#FF6B6966</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="zmp_orange">#FFFFB100</color>
+    <color name="zmp_orange">#FFFF8800</color>
+    <color name="zmp_bright_orange">#FFFFBB33</color>
+    <color name="background">#cccc</color>
 
 </resources>
