@@ -39,18 +39,23 @@ public class PlayerService extends Service {
         intentFilter.addAction("android.intent.action.HEADSET_PLUG");
         registerReceiver(receiver, intentFilter);
 
-        Notification notif = new Notification(R.drawable.ic_launcher, "ZPlayer2 started",
-                System.currentTimeMillis());
+        Notification.Builder builder = new Notification.Builder(this);
+        builder.setSmallIcon(R.drawable.ic_launcher);
+        builder.setAutoCancel(false);
+        builder.setTicker("ZMPlayer2 started");
+        builder.setWhen(System.currentTimeMillis());
 
         // 3-я часть
         Intent intent = new Intent(this, MainActivity.class);
         PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
-        // 2-я часть
-        notif.setLatestEventInfo(this, "ZMPlayer2", "Service started", pIntent);
+        builder.setContentIntent(pIntent);
 
-        // ставим флаг, чтобы уведомление пропало после нажатия
-        notif.flags |= Notification.FLAG_AUTO_CANCEL;
+        builder.setContentTitle("ZMPlayer2");
+        builder.setContentText("Service started");
+
+        Notification notif = builder.build();
+
         startForeground(666, notif);
     }
 

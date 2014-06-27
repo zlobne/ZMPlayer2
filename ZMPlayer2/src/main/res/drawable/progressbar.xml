@@ -10,14 +10,8 @@
     <item android:id="@android:id/progress">
         <clip>
             <shape>
-                <solid android:color="@android:color/holo_blue_dark" />
+                <solid android:color="@color/zmp_bright_orange" />
                 <corners android:radius="5dp" />
-                <gradient
-                    android:angle="90"
-                    android:centerColor="@android:color/holo_blue_dark"
-                    android:startColor="@color/black_transparent"
-                    android:endColor="@color/black_transparent"
-                />
             </shape>
         </clip>
     </item>
