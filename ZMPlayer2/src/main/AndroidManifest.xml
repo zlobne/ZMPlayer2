@@ -26,6 +26,7 @@
             android:name=".service.PlayerService"
             android:enabled="true"
             android:exported="true" />
+        <meta-data android:name="com.crashlytics.ApiKey" android:value="b8ec19691e04a8ce88b35817c468b7f9b704e568"/>
 
     </application>
 

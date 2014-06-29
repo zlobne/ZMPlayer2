@@ -9,6 +9,8 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.util.Log;
+import android.view.View;
+import android.widget.RemoteViews;
 
 import zmplayer2.app.R;
 import zmplayer2.app.model.Library;
@@ -28,16 +30,15 @@ public class PlayerService extends Service {
 
     private IncomingCallReceiver receiver;
 
+    private RemoteViews notificationView;
+
     @Override
     public void onCreate() {
         Log.d("trololo", "service started");
         musicPlayer = new MusicPlayer();
 
-        receiver = new IncomingCallReceiver(this);
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("android.intent.action.PHONE_STATE");
-        intentFilter.addAction("android.intent.action.HEADSET_PLUG");
-        registerReceiver(receiver, intentFilter);
+        initReceivers();
+        initWidgets();
 
         Notification.Builder builder = new Notification.Builder(this);
         builder.setSmallIcon(R.drawable.ic_launcher);
@@ -47,10 +48,13 @@ public class PlayerService extends Service {
 
         // 3-я часть
         Intent intent = new Intent(this, MainActivity.class);
-        PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         builder.setContentIntent(pIntent);
 
+//        builder.setContent(notificationView);
+//
+//        builder.setPriority(Notification.PRIORITY_MAX);
         builder.setContentTitle("ZMPlayer2");
         builder.setContentText("Service started");
 
@@ -79,5 +83,17 @@ public class PlayerService extends Service {
             return PlayerService.this;
         }
 
+    }
+
+    private void initReceivers() {
+        receiver = new IncomingCallReceiver(this);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("android.intent.action.PHONE_STATE");
+        intentFilter.addAction("android.intent.action.HEADSET_PLUG");
+        registerReceiver(receiver, intentFilter);
+    }
+
+    private void initWidgets() {
+        notificationView = new RemoteViews(getApplicationContext().getPackageName(), R.layout.notification_view);
     }
 }

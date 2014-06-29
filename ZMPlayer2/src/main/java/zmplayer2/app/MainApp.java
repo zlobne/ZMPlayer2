@@ -2,6 +2,8 @@ package zmplayer2.app;
 
 import android.app.Application;
 
+import com.crashlytics.android.Crashlytics;
+
 import zmplayer2.app.model.Library;
 
 /**
@@ -10,6 +12,7 @@ import zmplayer2.app.model.Library;
 public class MainApp extends Application {
     @Override
     public void onCreate() {
+        Crashlytics.start(this);
         Core.instance(this).startPlayerService();
         Library.instance(this);
     }

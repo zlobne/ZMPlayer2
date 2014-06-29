@@ -4,18 +4,12 @@ import android.app.Activity;
 
 import android.app.ActionBar;
 import android.app.FragmentManager;
-import android.content.ComponentName;
-import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 
 import zmplayer2.app.R;
-import zmplayer2.app.player.MusicPlayer;
-import zmplayer2.app.service.PlayerService;
 
 
 public class MainActivity extends Activity

@@ -52,15 +52,27 @@ public class IncomingCallReceiver extends BroadcastReceiver {
     private class ZMPhoneStateListener extends PhoneStateListener {
         public void onCallStateChanged(int state, String incomingNumber) {
             if (state == TelephonyManager.CALL_STATE_RINGING) {
-                Core.instance().getPlayerService().getMusicPlayer().pause(MusicPlayer.CALL);
+                try {
+                    Core.instance().getPlayerService().getMusicPlayer().pause(MusicPlayer.CALL);
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
             }
 
             if (state == TelephonyManager.CALL_STATE_OFFHOOK) {
-                Core.instance().getPlayerService().getMusicPlayer().pause(MusicPlayer.CALL);
+                try {
+                    Core.instance().getPlayerService().getMusicPlayer().pause(MusicPlayer.CALL);
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
             }
 
             if (state == TelephonyManager.CALL_STATE_IDLE) {
-                Core.instance().getPlayerService().getMusicPlayer().play(MusicPlayer.CALL);
+                try {
+                    Core.instance().getPlayerService().getMusicPlayer().play(MusicPlayer.CALL);
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
             }
         }
 

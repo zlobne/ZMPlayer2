@@ -2,16 +2,22 @@
 <pre-dex-items>
 
     <item
-        dex="/home/zlobne/projects/ZMPlayer2/ZMPlayer2/build/intermediates/pre-dexed/debug/support-v4-19.1.0-4c96464c3fb33f82e18051f30f42fa256bcd2c26.jar"
-        jar="/home/zlobne/android-studio/sdk/extras/android/m2repository/com/android/support/support-v4/19.1.0/support-v4-19.1.0.jar"
+        dex="C:\projects\ZMPlayer2\ZMPlayer2\build\intermediates\pre-dexed\debug\support-v4-19.1.0-fa7ce103930624f937ff3601536cd882cada0cd6.jar"
+        jar="C:\Users\Антон\AppData\Local\Android\android-studio\sdk\extras\android\m2repository\com\android\support\support-v4\19.1.0\support-v4-19.1.0.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
     <item
-        dex="/home/zlobne/projects/ZMPlayer2/ZMPlayer2/build/intermediates/pre-dexed/debug/gson-2.2.4-b617d920768dd26dc0244c691e36548885595507.jar"
-        jar="/home/zlobne/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.2.4/a60a5e993c98c864010053cb901b7eab25306568/gson-2.2.4.jar"
+        dex="C:\projects\ZMPlayer2\ZMPlayer2\build\intermediates\pre-dexed\debug\gson-2.2.4-76fd13b886f4f960788b6cace32a85fce1baa529.jar"
+        jar="C:\Users\Антон\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.2.4\a60a5e993c98c864010053cb901b7eab25306568\gson-2.2.4.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="a60a5e993c98c864010053cb901b7eab25306568"/>
+    <item
+        dex="C:\projects\ZMPlayer2\ZMPlayer2\build\intermediates\pre-dexed\debug\crashlytics-1.1.11-400654573c013eb91807f3842ab7f71920d1944b.jar"
+        jar="C:\Users\Антон\.gradle\caches\modules-2\files-2.1\com.crashlytics.android\crashlytics\1.1.11\b8189e9eef2f07fae743e05d7fe7e69daebe98d1\crashlytics-1.1.11.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="b8189e9eef2f07fae743e05d7fe7e69daebe98d1"/>
 
 </pre-dex-items>
