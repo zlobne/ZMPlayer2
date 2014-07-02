@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import zmplayer2.app.Core;
 import zmplayer2.app.R;
 import zmplayer2.app.model.Library;
 import zmplayer2.app.model.Song;
@@ -35,6 +36,7 @@ public class PlayerService extends Service {
     @Override
     public void onCreate() {
         Log.d("trololo", "service started");
+        Core.instance(this);
         musicPlayer = new MusicPlayer();
 
         initReceivers();

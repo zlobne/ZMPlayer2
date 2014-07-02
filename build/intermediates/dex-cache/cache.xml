@@ -2,22 +2,16 @@
 <pre-dex-items>
 
     <item
-        dex="C:\projects\ZMPlayer2\ZMPlayer2\build\intermediates\pre-dexed\debug\support-v4-19.1.0-fa7ce103930624f937ff3601536cd882cada0cd6.jar"
-        jar="C:\Users\Антон\AppData\Local\Android\android-studio\sdk\extras\android\m2repository\com\android\support\support-v4\19.1.0\support-v4-19.1.0.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
-    <item
-        dex="C:\projects\ZMPlayer2\ZMPlayer2\build\intermediates\pre-dexed\debug\gson-2.2.4-76fd13b886f4f960788b6cace32a85fce1baa529.jar"
-        jar="C:\Users\Антон\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.2.4\a60a5e993c98c864010053cb901b7eab25306568\gson-2.2.4.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="a60a5e993c98c864010053cb901b7eab25306568"/>
-    <item
-        dex="C:\projects\ZMPlayer2\ZMPlayer2\build\intermediates\pre-dexed\debug\crashlytics-1.1.11-400654573c013eb91807f3842ab7f71920d1944b.jar"
-        jar="C:\Users\Антон\.gradle\caches\modules-2\files-2.1\com.crashlytics.android\crashlytics\1.1.11\b8189e9eef2f07fae743e05d7fe7e69daebe98d1\crashlytics-1.1.11.jar"
+        dex="/home/ololoev/projects/ZMPlayer2/ZMPlayer2/build/intermediates/pre-dexed/debug/crashlytics-1.1.11-dd21ec8d85127df6c2b24556a495be054a1a5689.jar"
+        jar="/home/ololoev/.gradle/caches/modules-2/files-2.1/com.crashlytics.android/crashlytics/1.1.11/b8189e9eef2f07fae743e05d7fe7e69daebe98d1/crashlytics-1.1.11.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="b8189e9eef2f07fae743e05d7fe7e69daebe98d1"/>
+    <item
+        dex="/home/ololoev/projects/ZMPlayer2/ZMPlayer2/build/intermediates/pre-dexed/debug/support-v4-19.1.0-0242537fc184508a9b27ce28c10df3bd11844d70.jar"
+        jar="/home/ololoev/android-studio-new/sdk/extras/android/m2repository/com/android/support/support-v4/19.1.0/support-v4-19.1.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
 
 </pre-dex-items>

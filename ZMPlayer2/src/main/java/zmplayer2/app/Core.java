@@ -34,6 +34,7 @@ public class Core {
                 serviceBound = false;
             }
         };
+        context.bindService(new Intent(context, PlayerService.class), sConn, 0);
     }
 
     public static Core instance(Context context) {
@@ -45,13 +46,6 @@ public class Core {
 
     public static Core instance() {
         return self;
-    }
-
-    public boolean startPlayerService() {
-        Intent intent = new Intent(context, PlayerService.class);
-        context.startService(intent);
-        context.bindService(intent, sConn, 0);
-        return serviceBound;
     }
 
     public PlayerService getPlayerService() {
