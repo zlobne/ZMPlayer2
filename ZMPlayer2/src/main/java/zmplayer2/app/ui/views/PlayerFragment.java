@@ -115,7 +115,11 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
             }
 
             if (albumCover != null) {
-                addImage(albumCover);
+                try {
+                    addImage(albumCover);
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
             }
         }
         titleBar1 = (TextView) view.findViewById(R.id.titleBar1);
@@ -245,7 +249,11 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                addImage(BitmapFactory.decodeFile(filename));
+                try {
+                    addImage(BitmapFactory.decodeFile(filename));
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
