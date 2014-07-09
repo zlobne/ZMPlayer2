@@ -16,7 +16,7 @@ public class MainApp extends Application {
     public void onCreate() {
         Crashlytics.start(this);
         Intent intent = new Intent(this, PlayerService.class);
-        startService(intent);
         Library.instance(this);
+        startService(intent);
     }
 }

@@ -8,8 +8,8 @@
         revision="19.1.0"
         sha1="b8189e9eef2f07fae743e05d7fe7e69daebe98d1"/>
     <item
-        dex="/home/ololoev/projects/ZMPlayer2/ZMPlayer2/build/intermediates/pre-dexed/debug/support-v4-19.1.0-0242537fc184508a9b27ce28c10df3bd11844d70.jar"
-        jar="/home/ololoev/android-studio-new/sdk/extras/android/m2repository/com/android/support/support-v4/19.1.0/support-v4-19.1.0.jar"
+        dex="/home/ololoev/projects/ZMPlayer2/ZMPlayer2/build/intermediates/pre-dexed/debug/support-v4-19.1.0-838cdc03d2d5949247e08605e255e9a61911a985.jar"
+        jar="/home/ololoev/android_studio/sdk/extras/android/m2repository/com/android/support/support-v4/19.1.0/support-v4-19.1.0.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>

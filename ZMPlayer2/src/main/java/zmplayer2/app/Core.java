@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.IBinder;
 
 import zmplayer2.app.service.PlayerService;
@@ -22,6 +23,7 @@ public class Core {
 
     protected Core(Context context) {
         this.context = context;
+        PreferenceManager.instance(context);
         sConn = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {

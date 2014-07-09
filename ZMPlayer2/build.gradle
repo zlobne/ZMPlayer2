@@ -21,7 +21,7 @@ android {
     defaultConfig {
         applicationId 'zmplayer2.app'
         minSdkVersion 14
-        targetSdkVersion 19
+        targetSdkVersion 17
         versionCode 1
         versionName '0.1'
     }

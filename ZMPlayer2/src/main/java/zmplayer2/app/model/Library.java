@@ -14,6 +14,9 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Observable;
 
 import zmplayer2.app.R;
 
@@ -43,6 +46,19 @@ public class Library extends Item {
             self.createLibrary(context);
         }
         return self;
+    }
+
+    public Song findSongByPath(String path) {
+        for (Item item : getChilds().get(2).getChilds()) {
+            if (((Song) item).getSource().equals(path)) {
+                return (Song) item;
+            }
+        }
+        return null;
+    }
+
+    public Song getFirstSong() {
+        return (Song) getChilds().get(2).getChilds().get(0);
     }
 
     private void createArtists(Context context) {

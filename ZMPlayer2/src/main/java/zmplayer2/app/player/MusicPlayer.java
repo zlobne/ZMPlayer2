@@ -16,6 +16,8 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 import java.util.Observable;
 
+import zmplayer2.app.PreferenceManager;
+import zmplayer2.app.PreferencesConsts;
 import zmplayer2.app.model.Item;
 import zmplayer2.app.model.Song;
 import zmplayer2.app.net.model.JsonParser;
@@ -81,6 +83,7 @@ public class MusicPlayer extends Observable {
         if (album != null) {
             this.artist = album.getParent();
         }
+        PreferenceManager.instance().putString(PreferencesConsts.LAST_SONG, song.getSource());
         mediaPlayer.reset();
         try {
             mediaPlayer.setDataSource(song.getSource());
