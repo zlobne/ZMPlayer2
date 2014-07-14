@@ -97,6 +97,7 @@ public class MusicPlayer extends Observable {
 
     public void play() {
         if (!mediaPlayer.isPlaying()) {
+            wasPlaying = false;
             mediaPlayer.start();
         }
     }
@@ -135,6 +136,7 @@ public class MusicPlayer extends Observable {
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.pause();
         } else {
+            wasPlaying = false;
             mediaPlayer.start();
         }
     }

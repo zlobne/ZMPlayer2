@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Observable;
 
+import zmplayer2.app.Core;
 import zmplayer2.app.R;
 
 /**
@@ -26,9 +27,11 @@ import zmplayer2.app.R;
 public class Library extends Item {
 
     private static Library self;
+    private Context context;
 
-    public Library(String name, Item parent) {
+    public Library(String name, Item parent, Context context) {
         super(name, parent);
+        this.context = context;
     }
 
     public void createLibrary(Context context) {
@@ -42,7 +45,7 @@ public class Library extends Item {
 
     public static Library instance(Context context) {
         if (self == null) {
-            self = new Library("Library root", null);
+            self = new Library("Library root", null, context);
             self.createLibrary(context);
         }
         return self;
@@ -59,6 +62,11 @@ public class Library extends Item {
 
     public Song getFirstSong() {
         return (Song) getChilds().get(2).getChilds().get(0);
+    }
+
+    public void rescan() {
+        self = new Library("Library root", null, context);
+        self.createLibrary(context);
     }
 
     private void createArtists(Context context) {

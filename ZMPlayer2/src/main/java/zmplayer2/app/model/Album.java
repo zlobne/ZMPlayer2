@@ -47,7 +47,7 @@ public class Album extends Item {
 
         albumCover = BitmapFactory.decodeFile(albumArt);
         if (albumCover != null) {
-            albumCover = Bitmap.createScaledBitmap(albumCover, 400, 400, false);
+            albumCover = Bitmap.createScaledBitmap(albumCover, 400, 400, true);
         }
     }
 

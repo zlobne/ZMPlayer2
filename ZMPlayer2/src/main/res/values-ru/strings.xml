@@ -10,6 +10,7 @@
     <string name="albums">Альбомы</string>
     <string name="app_name">ZMPlayer2</string>
     <string name="artists">Исполнители</string>
+    <string name="rescan">Обновить библиотеку</string>
     <string name="title_library">Библиотека</string>
     <string name="title_files">Файлы</string>
     <string name="title_player">Плеер</string>

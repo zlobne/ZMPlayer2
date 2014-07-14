@@ -5,6 +5,10 @@
         android:title="@string/action_example"
         android:visible="false"
         android:showAsAction="withText|ifRoom" />
+    <item android:id="@+id/action_rescan"
+        android:title="@string/rescan"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
         android:orderInCategory="100"

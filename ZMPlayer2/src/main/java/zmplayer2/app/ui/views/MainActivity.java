@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 
 import zmplayer2.app.R;
+import zmplayer2.app.model.Library;
 
 
 public class MainActivity extends Activity
@@ -109,13 +110,23 @@ public class MainActivity extends Activity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+
+        switch (id) {
+            case R.id.action_settings: {
+                break;
+            }
+
+            case R.id.action_rescan: {
+                Library.instance(this).rescan();
+                break;
+            }
+
+            case R.id.action_quit: {
+                System.exit(0);
+                break;
+            }
         }
 
-        if (id == R.id.action_quit) {
-            System.exit(0);
-        }
         return super.onOptionsItemSelected(item);
     }
 }
