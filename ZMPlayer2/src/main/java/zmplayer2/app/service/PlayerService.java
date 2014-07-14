@@ -45,9 +45,9 @@ public class PlayerService extends Service {
         String lastSong = PreferenceManager.instance().getString(PreferencesConsts.LAST_SONG, "");
         Log.d("Search last song", lastSong);
         Song song = Library.instance(this).findSongByPath(lastSong);
-        Log.d("Search result", "" + song.toString());
 
         if (song != null) {
+            Log.d("Search result", "" + song.toString());
             musicPlayer.setSong(song);
         } else {
             musicPlayer.setSong(Library.instance(this).getFirstSong());

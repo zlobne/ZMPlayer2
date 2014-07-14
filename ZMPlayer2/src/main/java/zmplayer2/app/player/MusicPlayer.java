@@ -120,9 +120,9 @@ public class MusicPlayer extends Observable {
         try {
             if (mediaPlayer.isPlaying()) {
                 wasPlaying = true;
+                mediaPlayer.pause();
+                wasPaused[sender] = true;
             }
-            mediaPlayer.pause();
-            wasPaused[sender] = true;
             setChanged();
             notifyObservers();
         } catch (Exception e) {
