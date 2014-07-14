@@ -5,18 +5,22 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RemoteViews;
 
 import zmplayer2.app.Core;
 import zmplayer2.app.PreferenceManager;
 import zmplayer2.app.PreferencesConsts;
 import zmplayer2.app.R;
+import zmplayer2.app.model.Album;
 import zmplayer2.app.model.Library;
 import zmplayer2.app.model.Song;
 import zmplayer2.app.player.MusicPlayer;
@@ -57,7 +61,7 @@ public class PlayerService extends Service {
         initWidgets();
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        builder.setSmallIcon(R.drawable.ic_launcher);
+        builder.setSmallIcon(R.drawable.icon_notif);
         builder.setAutoCancel(false);
         builder.setTicker("ZMPlayer2 started");
         builder.setWhen(System.currentTimeMillis());
@@ -110,5 +114,6 @@ public class PlayerService extends Service {
 
     private void initWidgets() {
         notificationView = new RemoteViews(getApplicationContext().getPackageName(), R.layout.notification_view);
+//        notificationView.setImageViewBitmap(R.id.cover, ((Album) getMusicPlayer().getSong().getParent()).getAlbumCover());
     }
 }
