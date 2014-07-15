@@ -12,6 +12,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import zmplayer2.app.R;
+import zmplayer2.app.model.Item;
 import zmplayer2.app.ui.controllers.LibraryController;
 
 /**

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.IBinder;
 
 import zmplayer2.app.service.PlayerService;
@@ -20,6 +22,8 @@ public class Core {
     private ServiceConnection sConn;
     private PlayerService playerService;
     private boolean serviceBound;
+
+    private Bitmap defaultArt;
 
     protected Core(Context context) {
         this.context = context;
@@ -37,6 +41,7 @@ public class Core {
             }
         };
         context.bindService(new Intent(context, PlayerService.class), sConn, 0);
+        defaultArt = BitmapFactory.decodeResource(context.getResources(), R.drawable.default_art);
     }
 
     public static Core instance(Context context) {
@@ -52,5 +57,9 @@ public class Core {
 
     public PlayerService getPlayerService() {
         return playerService;
+    }
+
+    public Bitmap getDefaultArt() {
+        return defaultArt;
     }
 }

@@ -39,6 +39,18 @@ public class Library extends Item {
         this.addChild(new Item(context.getString(R.string.albums), this));
         this.addChild(new Item(context.getString(R.string.tracks), this));
         createArtists(context);
+
+//        for (Item item : getChilds().get(0).getChilds()) {
+//            for (Item album : item.getChilds()) {
+//                getChilds().get(1).addChild(album);
+//            }
+//        }
+//
+//        for (Item item : getChilds().get(1).getChilds()) {
+//            for (Item song : item.getChilds()) {
+//                getChilds().get(2).addChild(song);
+//            }
+//        }
         createAlbums(context, null);
         createTracks(context, null);
     }
@@ -49,6 +61,22 @@ public class Library extends Item {
             self.createLibrary(context);
         }
         return self;
+    }
+
+    public static Library instance() {
+        return self;
+    }
+
+    public Item getArtists() {
+        return getChilds().get(0);
+    }
+
+    public Item getAlbums() {
+        return getChilds().get(1);
+    }
+
+    public Item getTracks() {
+        return getChilds().get(2);
     }
 
     public Song findSongByPath(String path) {
@@ -153,12 +181,12 @@ public class Library extends Item {
         if (artist != null) {
             for (Item item : artist.getChilds()) {
                 createTracks(context, (Album) item);
-                ((Album) item).findAlbumCover();
+//                ((Album) item).findAlbumCover();
             }
         } else {
             for (Item item : this.getChilds().get(1).getChilds()) {
                 createTracks(context, (Album) item);
-                ((Album) item).findAlbumCover();
+//                ((Album) item).findAlbumCover();
             }
         }
     }

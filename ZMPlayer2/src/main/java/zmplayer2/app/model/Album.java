@@ -1,7 +1,9 @@
 package zmplayer2.app.model;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.File;
+import java.util.concurrent.ExecutionException;
 
+import zmplayer2.app.Core;
 import zmplayer2.app.R;
+import zmplayer2.app.async.GetBitmapTask;
 
 /**
  * Created by Anton Prozorov on 09.06.14.
@@ -19,7 +24,7 @@ public class Album extends Item {
 
     private String albumArt;
     private String artistName;
-    private Bitmap albumCover;
+//    private Bitmap albumCover;
 
     public Album(String name, Item parent) {
         super(name, parent);
@@ -30,25 +35,36 @@ public class Album extends Item {
         this.albumArt = albumArt;
     }
 
-    public Bitmap getAlbumCover() {
-        return albumCover;
+    public Bitmap getAlbumCover(int size) {
+        GetBitmapTask task = new GetBitmapTask();
+        try {
+            return task.execute(albumArt, ((Song) getChilds().get(0)).getSource(), String.valueOf(size)).get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+//        return albumCover;
     }
 
-    public void setAlbumCover(Bitmap albumCover) {
-        this.albumCover = albumCover;
+    public Bitmap getAlbumCover() {
+        return getAlbumCover(400);
     }
+
+//    public void setAlbumCover(Bitmap albumCover) {
+//        this.albumCover = albumCover;
+//    }
 
     public void findAlbumCover() {
-        if (albumArt == null || albumArt.isEmpty()) {
-            if (getChilds() != null && ! getChilds().isEmpty()) {
-                albumArt = new File(((Song) getChilds().get(0)).getSource()).getParent() + "/cover.jpg";
-            }
-        }
-
-        albumCover = BitmapFactory.decodeFile(albumArt);
-        if (albumCover != null) {
-            albumCover = Bitmap.createScaledBitmap(albumCover, 400, 400, true);
-        }
+//        if (albumArt == null || albumArt.isEmpty()) {
+//            if (getChilds() != null && ! getChilds().isEmpty()) {
+//                albumArt = new File(((Song) getChilds().get(0)).getSource()).getParent() + "/cover.jpg";
+//            }
+//        }
+//
+//        albumCover = BitmapFactory.decodeFile(albumArt);
+//        if (albumCover != null) {
+//            albumCover = Bitmap.createScaledBitmap(albumCover, 400, 400, true);
+//        }
     }
 
     public void setArtistName(String artistName) {
@@ -74,11 +90,25 @@ public class Album extends Item {
         artistName.setText(getName());
         TextView albumCount = (TextView) view.findViewById(R.id.tracksCount);
         albumCount.setText(getChilds().size() + " " + inflater.getContext().getString(R.string.tracks_count));
-        ImageView cover = (ImageView) view.findViewById(R.id.cover);
+        final ImageView cover = (ImageView) view.findViewById(R.id.cover);
 
-        if (albumCover != null) {
-            cover.setImageBitmap(albumCover);
-        }
+        cover.setImageBitmap(Bitmap.createScaledBitmap(Core.instance().getDefaultArt(), 100, 100, true));
+
+        new GetBitmapTask(new GetBitmapTask.GetBitmapListener() {
+            @Override
+            public void onCompleted(Bitmap bitmap) {
+                if (bitmap != null) {
+                    cover.setImageBitmap(bitmap);
+                }
+            }
+        }).execute(albumArt, ((Song) getChilds().get(0)).getSource(), "100");
+//        Bitmap albumCover = getAlbumCover(100);
+//
+//
+//        if (albumCover != null) {
+//            cover.setImageBitmap(albumCover);
+//        }
+
         viewGroup.addView(view);
     }
 }

@@ -120,6 +120,8 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }
+            } else {
+                addImage(Bitmap.createScaledBitmap(Core.instance().getDefaultArt(), 400, 400, true));
             }
         }
         titleBar1 = (TextView) view.findViewById(R.id.titleBar1);
