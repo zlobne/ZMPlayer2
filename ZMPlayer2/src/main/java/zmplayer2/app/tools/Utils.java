@@ -9,4 +9,12 @@ public class Utils {
         int min  = (int)(time/ (1000) / 60);
         return (String.format("%02d", min) + ":" + String.format("%02d", sec));
     }
+
+    public static String properName(String s) {
+        if (s != null) {
+            return s.replace("/", "_").replace("?", "_").replace(":", "_").replace(";", "_").replace("*", "_").replace(">", "_").replace("<", "_").replace("|", "_");
+        } else {
+            return "null";
+        }
+    }
 }

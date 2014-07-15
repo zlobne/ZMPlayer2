@@ -1,21 +1,16 @@
 package zmplayer2.app.model;
 
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.File;
-import java.util.concurrent.ExecutionException;
-
 import zmplayer2.app.Core;
 import zmplayer2.app.R;
 import zmplayer2.app.async.GetBitmapTask;
+import zmplayer2.app.tools.Utils;
 
 /**
  * Created by Anton Prozorov on 09.06.14.
@@ -38,7 +33,7 @@ public class Album extends Item {
     public Bitmap getAlbumCover(int size) {
         GetBitmapTask task = new GetBitmapTask();
         try {
-            return task.execute(albumArt, ((Song) getChilds().get(0)).getSource(), String.valueOf(size)).get();
+            return task.execute(albumArt, ((Song) getChilds().get(0)).getSource(), String.valueOf(size), Utils.properName(getName())).get();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -101,7 +96,7 @@ public class Album extends Item {
                     cover.setImageBitmap(bitmap);
                 }
             }
-        }).execute(albumArt, ((Song) getChilds().get(0)).getSource(), "100");
+        }).execute(albumArt, ((Song) getChilds().get(0)).getSource(), "100", Utils.properName(getName()));
 //        Bitmap albumCover = getAlbumCover(100);
 //
 //

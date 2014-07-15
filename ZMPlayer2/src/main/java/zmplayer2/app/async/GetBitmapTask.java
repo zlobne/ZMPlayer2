@@ -33,9 +33,16 @@ public class GetBitmapTask extends AsyncTask<String, Void, Bitmap>{
     @Override
     protected Bitmap doInBackground(String... params) {
         String albumArt = params[0];
+
+        String fileName = "/cover";
+        if (params[3] != null && !params[3].isEmpty()) {
+            fileName += params[3];
+        }
+        fileName += ".jpg";
+
         if (albumArt == null || albumArt.isEmpty()) {
             if (params[1] != null && ! params[1].isEmpty()) {
-                albumArt = new File(params[1]).getParent() + "/cover.jpg";
+                albumArt = new File(params[1]).getParent() + fileName;
             }
         }
 

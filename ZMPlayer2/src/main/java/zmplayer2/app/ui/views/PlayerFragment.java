@@ -102,7 +102,16 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
             }
             if (albumCover == null) {
                 File song = new File(Core.instance().getPlayerService().getMusicPlayer().getSong().getSource());
-                String filename = song.getParent() + "/cover.jpg";
+
+                String coverName = "/cover";
+                if (Core.instance().getPlayerService().getMusicPlayer().getSong().getAlbumName() != null
+                        && Core.instance().getPlayerService().getMusicPlayer().getSong().getAlbumName().isEmpty()) {
+                    coverName += Utils.properName(Core.instance().getPlayerService().getMusicPlayer().getSong().getAlbumName());
+                }
+
+                coverName += ".jpg";
+
+                String filename = song.getParent() + coverName;
                 Log.d("ololo", "cover " + filename);
                 final File coverArt = new File(filename);
 
