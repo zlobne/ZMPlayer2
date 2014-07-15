@@ -8,7 +8,7 @@
         android:id="@+id/albumArt"
         android:orientation="horizontal"
         android:gravity="center"
-        android:animateLayoutChanges="false"
+        android:animateLayoutChanges="true"
         android:layout_weight="4"
         android:layout_width="match_parent"
         android:layout_height="0dp" />

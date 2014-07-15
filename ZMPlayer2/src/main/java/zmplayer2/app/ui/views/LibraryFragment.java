@@ -88,7 +88,7 @@ public class LibraryFragment extends Fragment implements Observer {
     @Override
     public void update(Observable observable, Object o) {
         if (o != null) {
-            ((MainActivity) getActivity()).onNavigationDrawerItemSelected(2);
+            ((MainActivity) getActivity()).onNavigationDrawerItemSelected(1);
         }
     }
 }

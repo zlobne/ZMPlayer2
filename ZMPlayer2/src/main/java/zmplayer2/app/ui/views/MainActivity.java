@@ -53,13 +53,13 @@ public class MainActivity extends Activity
                         .commit();
                 break;
             }
+//            case 1: {
+//                fragmentManager.beginTransaction()
+//                        .replace(R.id.container, FilesFragment.newInstance(position + 1))
+//                        .commit();
+//                break;
+//            }
             case 1: {
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, FilesFragment.newInstance(position + 1))
-                        .commit();
-                break;
-            }
-            case 2: {
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, PlayerFragment.newInstance(position + 1))
                         .commit();
@@ -74,10 +74,10 @@ public class MainActivity extends Activity
             case 1:
                 mTitle = getString(R.string.title_library);
                 break;
+//            case 2:
+//                mTitle = getString(R.string.title_files);
+//                break;
             case 2:
-                mTitle = getString(R.string.title_files);
-                break;
-            case 3:
                 mTitle = getString(R.string.title_player);
                 break;
         }
