@@ -71,11 +71,11 @@ public class PlayerService extends Service {
 
         builder.setContentIntent(pIntent);
 
-//        builder.setContent(notificationView);
+        builder.setContent(notificationView);
 //
 //        builder.setPriority(Notification.PRIORITY_MAX);
-        builder.setContentTitle("ZMPlayer2");
-        builder.setContentText("Service started");
+//        builder.setContentTitle("ZMPlayer2");
+//        builder.setContentText("Service started");
 
         Notification notif = builder.build();
 
@@ -114,6 +114,7 @@ public class PlayerService extends Service {
 
     private void initWidgets() {
         notificationView = new RemoteViews(getApplicationContext().getPackageName(), R.layout.notification_view);
+        notificationView.setImageViewBitmap(R.id.cover, BitmapFactory.decodeResource(getResources(), R.drawable.default_art));
 //        notificationView.setImageViewBitmap(R.id.cover, ((Album) getMusicPlayer().getSong().getParent()).getAlbumCover());
     }
 }
