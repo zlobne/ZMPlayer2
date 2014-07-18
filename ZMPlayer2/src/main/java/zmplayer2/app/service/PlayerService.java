@@ -6,14 +6,10 @@ import android.app.Service;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.os.Binder;
 import android.os.IBinder;
-import android.os.Parcel;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.RemoteViews;
 
 import zmplayer2.app.Core;
@@ -38,8 +34,6 @@ public class PlayerService extends Service {
 
     private IncomingCallReceiver receiver;
 
-    private RemoteViews notificationView;
-
     @Override
     public void onCreate() {
         Log.d("trololo", "service started");
@@ -58,7 +52,6 @@ public class PlayerService extends Service {
         }
 
         initReceivers();
-        initWidgets();
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         builder.setSmallIcon(R.drawable.icon_notif);
@@ -68,14 +61,15 @@ public class PlayerService extends Service {
 
         Intent intent = new Intent(this, MainActivity.class);
         PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setPriority(Notification.PRIORITY_MAX);
 
-        builder.setContentIntent(pIntent);
-
-        builder.setContent(notificationView);
-//
-//        builder.setPriority(Notification.PRIORITY_MAX);
-//        builder.setContentTitle("ZMPlayer2");
-//        builder.setContentText("Service started");
+        if (getMusicPlayer().getSong() == null) {
+            builder.setContentIntent(pIntent);
+            builder.setContentTitle("ZMPlayer2");
+            builder.setContentText("Service started");
+        } else {
+            builder.setContent(getNotification());
+        }
 
         Notification notif = builder.build();
 
@@ -112,9 +106,11 @@ public class PlayerService extends Service {
         registerReceiver(receiver, intentFilter);
     }
 
-    private void initWidgets() {
-        notificationView = new RemoteViews(getApplicationContext().getPackageName(), R.layout.notification_view);
+    private RemoteViews getNotification() {
+        RemoteViews notificationView = new RemoteViews(getApplicationContext().getPackageName(), R.layout.notification_view);
         notificationView.setImageViewBitmap(R.id.cover, BitmapFactory.decodeResource(getResources(), R.drawable.default_art));
 //        notificationView.setImageViewBitmap(R.id.cover, ((Album) getMusicPlayer().getSong().getParent()).getAlbumCover());
+        notificationView.setCharSequence(R.id.songName, "setText", getMusicPlayer().getSong().getArtistName() + " - " + getMusicPlayer().getSong().getName());
+        return notificationView;
     }
 }

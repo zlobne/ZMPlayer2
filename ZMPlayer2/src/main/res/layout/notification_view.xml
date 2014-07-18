@@ -15,7 +15,7 @@
         android:layout_height="@android:dimen/notification_large_icon_height">
         <LinearLayout
             android:orientation="vertical"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:layout_width="0dp"
             android:layout_height="@android:dimen/notification_large_icon_height">
             <TextView
@@ -36,14 +36,22 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="@android:dimen/notification_large_icon_height">
-            <!--<ToggleButton-->
-                <!--android:layout_weight="1"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="fill_parent" />-->
-            <!--<ImageButton-->
-                <!--android:layout_weight="1"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="fill_parent" />-->
+            <ImageButton
+                style="@style/ButtonBorderless.NoClick"
+                android:src="@android:drawable/ic_media_play"
+                android:scaleType="fitCenter"
+                android:background="@android:color/transparent"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent" />
+            <ImageButton
+                style="@style/ButtonBorderless.NoClick"
+                android:src="@android:drawable/ic_media_next"
+                android:scaleType="fitCenter"
+                android:background="@android:color/transparent"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

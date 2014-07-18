@@ -1,8 +1,5 @@
 package zmplayer2.app.player;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.util.Log;
 
@@ -243,7 +240,7 @@ public class MusicPlayer extends Observable {
                     String result = EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
                     Log.d("trololoq", result);
                     AlbumInfo info = JsonParser.parseAlbumInfo(result);
-                    new DownloadTask(listener).execute(info.getAlbum().getImages().get(3).getText(), filename);
+                    new DownloadTask(listener).execute(info.getAlbumObject().getImages().get(3).getText(), filename);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

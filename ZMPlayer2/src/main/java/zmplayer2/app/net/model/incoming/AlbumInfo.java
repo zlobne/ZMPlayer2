@@ -10,10 +10,10 @@ import zmplayer2.app.net.model.JsonKeys;
 public class AlbumInfo {
 
     @SerializedName(JsonKeys.ALBUM)
-    private Album album;
+    private AlbumObject albumObject;
 
-    public Album getAlbum() {
-        return album;
+    public AlbumObject getAlbumObject() {
+        return albumObject;
     }
 
 }

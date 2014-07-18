@@ -9,7 +9,7 @@ import zmplayer2.app.net.model.JsonKeys;
 /**
  * Created by Anton Prozorov on 25.03.14.
  */
-public class Album {
+public class AlbumObject {
 //    @SerializedName(JsonKeys.NAME)
 //    private String name;
 //    @SerializedName(JsonKeys.ARTIST)
