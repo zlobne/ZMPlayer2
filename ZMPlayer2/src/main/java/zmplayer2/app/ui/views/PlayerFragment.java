@@ -223,7 +223,8 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
 
     private void addImage(Bitmap bitmap) {
         albumArt.removeAllViews();
-        ImageView imageView = (ImageView) getActivity().getLayoutInflater().inflate(R.layout.album_view, null);
+//        ImageView imageView = (ImageView) getActivity().getLayoutInflater().inflate(R.layout.album_view, null);
+        ImageView imageView = (ImageView) View.inflate(getActivity(), R.layout.album_view, albumArt);
         imageView.setImageBitmap(bitmap);
         albumArt.addView(imageView);
     }
