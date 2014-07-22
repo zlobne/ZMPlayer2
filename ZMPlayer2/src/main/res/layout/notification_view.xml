@@ -19,8 +19,8 @@
             android:layout_width="0dp"
             android:layout_height="@android:dimen/notification_large_icon_height">
             <TextView
+                android:id="@+id/artistName"
                 android:gravity="center"
-                android:text="@string/now_playing"
                 android:layout_weight="1"
                 android:layout_width="fill_parent"
                 android:layout_height="0dp" />
@@ -29,6 +29,8 @@
                 android:gravity="center"
                 android:layout_weight="1"
                 android:layout_width="fill_parent"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:layout_height="0dp" />
         </LinearLayout>
         <LinearLayout
@@ -38,6 +40,7 @@
             android:layout_height="@android:dimen/notification_large_icon_height">
             <ImageButton
                 style="@style/ButtonBorderless.NoClick"
+                android:id="@+id/playPauseBtn"
                 android:src="@android:drawable/ic_media_play"
                 android:scaleType="fitCenter"
                 android:background="@android:color/transparent"
@@ -46,6 +49,7 @@
                 android:layout_height="fill_parent" />
             <ImageButton
                 style="@style/ButtonBorderless.NoClick"
+                android:id="@+id/nextBtn"
                 android:src="@android:drawable/ic_media_next"
                 android:scaleType="fitCenter"
                 android:background="@android:color/transparent"

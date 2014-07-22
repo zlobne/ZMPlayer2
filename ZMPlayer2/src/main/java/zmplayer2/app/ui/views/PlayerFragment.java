@@ -34,6 +34,7 @@ import zmplayer2.app.model.Song;
 import zmplayer2.app.net.DownloadTask;
 import zmplayer2.app.player.MusicPlayer;
 import zmplayer2.app.tools.Utils;
+import zmplayer2.app.ui.TickerTextView;
 import zmplayer2.app.ui.controllers.PlayerController;
 
 /**
@@ -45,7 +46,7 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
     private PlayerController playerController;
 
     private ViewGroup albumArt;
-    private TextView titleBar1;
+    private TickerTextView titleBar1;
     private TextView titleBar2;
     private ImageButton prevBtn;
     private ImageButton playPauseBtn;
@@ -88,7 +89,7 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
                 getArguments().getInt(ARG_SECTION_NUMBER));
     }
 
-    private void updateView() {
+    private void updateImage() {
         albumArt.removeAllViews();
         if (Core.instance().getPlayerService().getMusicPlayer().getSong() != null) {
             Bitmap albumCover = null;
@@ -126,6 +127,13 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
                 albumCover = Bitmap.createScaledBitmap(Core.instance().getDefaultArt(), 400, 400, true);
             }
             addImage(albumCover);
+        }
+    }
+
+    private void updateView(boolean updateImage) {
+
+        if (updateImage) {
+            updateImage();
         }
 
         if (Core.instance().getPlayerService().getMusicPlayer().isPlaying()) {
@@ -168,7 +176,8 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
 
     private void initViews(View view) {
         albumArt = (ViewGroup) view.findViewById(R.id.albumArt);
-        titleBar1 = (TextView) view.findViewById(R.id.titleBar1);
+        titleBar1 = (TickerTextView) view.findViewById(R.id.titleBar1);
+        titleBar1.setSelected(true);
         titleBar2 = (TextView) view.findViewById(R.id.titleBar2);
         prevBtn = (ImageButton) view.findViewById(R.id.prevBtn);
         prevBtn.setOnClickListener(new View.OnClickListener() {
@@ -218,7 +227,7 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
         });
         currentTime = (TextView) view.findViewById(R.id.current);
         fullTime = (TextView) view.findViewById(R.id.full);
-        updateView();
+        updateView(true);
     }
 
     private void addImage(Bitmap bitmap) {
@@ -230,7 +239,11 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
 
     @Override
     public void update(Observable observable, Object o) {
-        updateView();
+        boolean updateImage = false;
+        if (o == null) {
+            updateImage = true;
+        }
+        updateView(updateImage);
     }
 
     @Override

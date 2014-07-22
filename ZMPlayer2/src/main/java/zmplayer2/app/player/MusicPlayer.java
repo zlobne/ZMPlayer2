@@ -96,6 +96,8 @@ public class MusicPlayer extends Observable {
         if (!mediaPlayer.isPlaying()) {
             wasPlaying = false;
             mediaPlayer.start();
+            setChanged();
+            notifyObservers();
         }
     }
 
@@ -136,6 +138,8 @@ public class MusicPlayer extends Observable {
             wasPlaying = false;
             mediaPlayer.start();
         }
+        setChanged();
+        notifyObservers(new Object());
     }
 
     public void nextSong(boolean forcePlay) {
@@ -150,6 +154,8 @@ public class MusicPlayer extends Observable {
         if (forcePlay) {
             play();
         }
+        setChanged();
+        notifyObservers();
     }
 
     private void nextAlbum(boolean forcePlay) {
@@ -164,6 +170,8 @@ public class MusicPlayer extends Observable {
         if (forcePlay) {
             play();
         }
+        setChanged();
+        notifyObservers();
     }
 
     private void nextArtist(boolean forcePlay) {
@@ -175,6 +183,8 @@ public class MusicPlayer extends Observable {
         if (forcePlay) {
             play();
         }
+        setChanged();
+        notifyObservers();
     }
 
     public void prevSong(boolean forcePlay) {
@@ -189,6 +199,8 @@ public class MusicPlayer extends Observable {
         if (forcePlay) {
             play();
         }
+        setChanged();
+        notifyObservers();
     }
 
     private void prevAlbum(boolean forcePlay) {
@@ -204,6 +216,8 @@ public class MusicPlayer extends Observable {
         if (forcePlay) {
             play();
         }
+        setChanged();
+        notifyObservers();
     }
 
     private void prevArtist(boolean forcePlay) {
@@ -223,6 +237,8 @@ public class MusicPlayer extends Observable {
         if (forcePlay) {
             play();
         }
+        setChanged();
+        notifyObservers();
     }
 
     public void downloadCoverArt(final String filename, final DownloadTask.DownloadTaskListener listener) {

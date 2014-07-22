@@ -13,10 +13,16 @@
         android:layout_width="match_parent"
         android:layout_height="0dp" />
 
-    <TextView
+    <zmplayer2.app.ui.TickerTextView
         android:id="@+id/titleBar1"
         style="@style/Text.Big"
         android:gravity="center"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:singleLine="true"
+        android:focusableInTouchMode="true"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
         android:layout_weight="0.5"
         android:layout_width="match_parent"
         android:layout_height="0dp" />
