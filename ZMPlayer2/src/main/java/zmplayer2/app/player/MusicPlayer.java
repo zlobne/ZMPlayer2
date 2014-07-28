@@ -72,7 +72,7 @@ public class MusicPlayer extends Observable {
     }
 
     public void setSong(Song song) {
-        if (this.song == song) {
+        if (this.song == song || song == null) {
             return;
         }
         this.song = song;
@@ -93,7 +93,7 @@ public class MusicPlayer extends Observable {
     }
 
     public void play() {
-        if (!mediaPlayer.isPlaying()) {
+        if (!mediaPlayer.isPlaying() && song != null) {
             wasPlaying = false;
             mediaPlayer.start();
             setChanged();
@@ -102,6 +102,9 @@ public class MusicPlayer extends Observable {
     }
 
     public void play(int sender) {
+        if (song == null) {
+            return;
+        }
         try {
             wasPaused[sender] = false;
             if (!wasPaused[Math.abs(sender - 1)] && wasPlaying) {

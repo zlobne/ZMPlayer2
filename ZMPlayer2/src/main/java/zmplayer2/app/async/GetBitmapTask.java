@@ -35,20 +35,20 @@ public class GetBitmapTask extends AsyncTask<String, Void, Bitmap>{
         String albumArt = params[0];
 
         String fileName = "/cover";
-        if (params[3] != null && !params[3].isEmpty()) {
+        if (params.length >= 4 && params[3] != null && !params[3].isEmpty()) {
             fileName += params[3];
         }
         fileName += ".jpg";
 
         if (albumArt == null || albumArt.isEmpty()) {
-            if (params[1] != null && ! params[1].isEmpty()) {
+            if (params.length >= 2 && params[1] != null && ! params[1].isEmpty()) {
                 albumArt = new File(params[1]).getParent() + fileName;
             }
         }
 
         int size = 100;
 
-        if (params[2] != null && !params[2].isEmpty()) {
+        if (params.length >= 3 && params[2] != null && !params[2].isEmpty()) {
             size = Integer.valueOf(params[2]);
         }
 

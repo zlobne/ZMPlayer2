@@ -12,19 +12,15 @@ import zmplayer2.app.player.MusicPlayer;
 /**
  * Created by Anton Prozorov on 26.06.14.
  */
-public class IncomingCallReceiver extends BroadcastReceiver {
+public class RemoteControl extends BroadcastReceiver {
 
-    private Context context;
+    public RemoteControl() {
 
-    private TelephonyManager tmgr;
-
-    public IncomingCallReceiver(Context context) {
-        this.context = context;
-        tmgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        TelephonyManager tmgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         String action = intent.getAction();
         if ("android.intent.action.PHONE_STATE".equals(action)) {
             tmgr.listen(new ZMPhoneStateListener(), PhoneStateListener.LISTEN_CALL_STATE);
@@ -45,6 +41,14 @@ public class IncomingCallReceiver extends BroadcastReceiver {
                     e.printStackTrace();
                 }
             }
+        }
+
+        if ("zmp.playPause".equals(action)) {
+            Core.instance().getPlayerService().getMusicPlayer().playPause();
+        }
+
+        if ("zmp.nextSong".equals(action)) {
+            Core.instance().getPlayerService().getMusicPlayer().nextSong(Core.instance().getPlayerService().getMusicPlayer().isPlaying());
         }
 
     }

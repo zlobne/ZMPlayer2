@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
+import android.widget.Toast;
 
 import zmplayer2.app.R;
 import zmplayer2.app.model.Library;
@@ -60,9 +61,13 @@ public class MainActivity extends Activity
 //                break;
 //            }
             case 1: {
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, PlayerFragment.newInstance(position + 1))
-                        .commit();
+                if (Library.instance().haveSongs()) {
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.container, PlayerFragment.newInstance(position + 1))
+                            .commit();
+                } else {
+                    Toast.makeText(this, "ololo", Toast.LENGTH_SHORT).show();
+                }
                 break;
             }
         }

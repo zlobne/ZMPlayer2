@@ -23,6 +23,19 @@
             </intent-filter>
         </activity>
 
+        <receiver
+            android:name=".receivers.RemoteControl">
+            <intent-filter>
+                <action android:name="android.intent.action.PHONE_STATE" />
+                <action android:name="android.intent.action.HEADSET_PLUG" />
+                <action android:name="zmp.playPause" />
+                <action android:name="zmp.nextSong" />
+            </intent-filter>
+        </receiver>
+
+
+
+
         <service
             android:name=".service.PlayerService"
             android:enabled="true"

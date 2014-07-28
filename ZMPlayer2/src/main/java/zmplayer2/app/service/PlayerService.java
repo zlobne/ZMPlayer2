@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Binder;
 import android.os.IBinder;
@@ -12,6 +13,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -23,7 +25,8 @@ import zmplayer2.app.model.Album;
 import zmplayer2.app.model.Library;
 import zmplayer2.app.model.Song;
 import zmplayer2.app.player.MusicPlayer;
-import zmplayer2.app.receivers.IncomingCallReceiver;
+import zmplayer2.app.receivers.RemoteControl;
+import zmplayer2.app.tools.Utils;
 import zmplayer2.app.ui.views.MainActivity;
 
 /**
@@ -35,7 +38,7 @@ public class PlayerService extends Service implements Observer {
 
     private MusicPlayer musicPlayer;
 
-    private IncomingCallReceiver receiver;
+    private RemoteControl receiver;
 
     @Override
     public void onCreate() {
@@ -55,7 +58,7 @@ public class PlayerService extends Service implements Observer {
             musicPlayer.setSong(Library.instance(this).getFirstSong());
         }
 
-        initReceivers();
+//        initReceivers();
         sendNotif();
     }
 
@@ -91,20 +94,32 @@ public class PlayerService extends Service implements Observer {
 
     }
 
-    private void initReceivers() {
-        receiver = new IncomingCallReceiver(this);
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("android.intent.action.PHONE_STATE");
-        intentFilter.addAction("android.intent.action.HEADSET_PLUG");
-        registerReceiver(receiver, intentFilter);
-    }
+//    private void initReceivers() {
+//        receiver = new RemoteControl(this);
+//        IntentFilter intentFilter = new IntentFilter();
+//        intentFilter.addAction("android.intent.action.PHONE_STATE");
+//        intentFilter.addAction("android.intent.action.HEADSET_PLUG");
+//        registerReceiver(receiver, intentFilter);
+//    }
 
     private RemoteViews getNotification() {
         RemoteViews notificationView = new RemoteViews(getApplicationContext().getPackageName(), R.layout.notification_view);
-        notificationView.setImageViewBitmap(R.id.cover, BitmapFactory.decodeResource(getResources(), R.drawable.default_art));
-//        notificationView.setImageViewBitmap(R.id.cover, ((Album) getMusicPlayer().getSong().getParent()).getAlbumCover());
+        notificationView.setOnClickPendingIntent(R.id.playPauseBtn, PendingIntent.getBroadcast(this, 0, new Intent("zmp.playPause"), PendingIntent.FLAG_UPDATE_CURRENT));
+        notificationView.setOnClickPendingIntent(R.id.nextBtn, PendingIntent.getBroadcast(this, 0, new Intent("zmp.nextSong"), PendingIntent.FLAG_UPDATE_CURRENT));
         notificationView.setCharSequence(R.id.artistName, "setText", getMusicPlayer().getSong().getArtistName());
         notificationView.setCharSequence(R.id.songName, "setText", getMusicPlayer().getSong().getName());
+
+        if (getMusicPlayer().isPlaying()) {
+            notificationView.setImageViewBitmap(R.id.playPauseBtn, BitmapFactory.decodeResource(getResources(), android.R.drawable.ic_media_pause));
+        } else {
+            notificationView.setImageViewBitmap(R.id.playPauseBtn, BitmapFactory.decodeResource(getResources(), android.R.drawable.ic_media_play));
+        }
+
+        Bitmap albumCover = getAlbumArt();
+        if (albumCover == null) {
+            albumCover = Bitmap.createScaledBitmap(Core.instance().getDefaultArt(), 100, 100, true);
+        }
+        notificationView.setImageViewBitmap(R.id.cover, albumCover);
         return notificationView;
     }
 
@@ -130,5 +145,43 @@ public class PlayerService extends Service implements Observer {
         Notification notif = builder.build();
 
         startForeground(666, notif);
+    }
+
+    private Bitmap getAlbumArt() {
+        Bitmap albumCover = null;
+        if (getMusicPlayer().getSong() != null) {
+            if (getMusicPlayer().getSong().getParent() != null
+                    && getMusicPlayer().getSong().getParent().getParent() != null) {
+                try {
+                    albumCover = ((Album) getMusicPlayer().getSong().getParent()).getAlbumCover();
+                } catch (Exception e) {
+                    Log.d("ololo", e.getLocalizedMessage());
+                }
+            }
+            if (albumCover == null) {
+                File song = new File(getMusicPlayer().getSong().getSource());
+
+                String coverName = "/cover";
+                if (getMusicPlayer().getSong().getAlbumName() != null
+                        && getMusicPlayer().getSong().getAlbumName().isEmpty()) {
+                    coverName += Utils.properName(getMusicPlayer().getSong().getAlbumName());
+                }
+
+                coverName += ".jpg";
+
+                String filename = song.getParent() + coverName;
+                Log.d("ololo", "cover " + filename);
+                final File coverArt = new File(filename);
+
+                if (coverArt.exists()) {
+                    albumCover = BitmapFactory.decodeFile(coverArt.getAbsolutePath());
+                }
+            }
+
+            if (albumCover == null) {
+                albumCover = Bitmap.createScaledBitmap(Core.instance().getDefaultArt(), 100, 100, true);
+            }
+        }
+        return albumCover;
     }
 }

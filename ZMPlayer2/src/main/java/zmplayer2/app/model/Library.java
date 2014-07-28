@@ -67,6 +67,10 @@ public class Library extends Item {
         return self;
     }
 
+    public boolean haveSongs() {
+        return (!getChilds().get(2).getChilds().isEmpty());
+    }
+
     public Item getArtists() {
         return getChilds().get(0);
     }
@@ -89,7 +93,10 @@ public class Library extends Item {
     }
 
     public Song getFirstSong() {
-        return (Song) getChilds().get(2).getChilds().get(0);
+        if (!getChilds().get(2).getChilds().isEmpty()) {
+            return (Song) getChilds().get(2).getChilds().get(0);
+        }
+        return null;
     }
 
     public void rescan() {
