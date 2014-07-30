@@ -25,8 +25,19 @@ android {
         versionCode 2
         versionName '0.2'
     }
+
+    signingConfigs {
+        release {
+            storeFile file("zmplayer2.keystore")
+            storePassword System.getenv("KEYSTORE_PASSWORD")
+            keyAlias "zmplayer2"
+            keyPassword System.getenv("KEY_PASSWORD")
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
