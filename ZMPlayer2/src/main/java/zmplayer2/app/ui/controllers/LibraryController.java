@@ -12,6 +12,7 @@ import java.util.Observer;
 import zmplayer2.app.R;
 import zmplayer2.app.model.Item;
 import zmplayer2.app.model.Library;
+import zmplayer2.app.ui.views.MainActivity;
 
 /**
  * Created by Anton Prozorov on 06.06.14.
@@ -34,9 +35,11 @@ public class LibraryController extends Observable implements Observer {
         currentRoot = Library.instance(context);
 
         subscribe(currentRoot);
+
     }
 
     public void draw() {
+        viewGroup.removeAllViews();
         for (Item item : currentRoot.getChilds()) {
             item.draw(viewGroup, inflater);
         }
@@ -55,7 +58,6 @@ public class LibraryController extends Observable implements Observer {
         if (data == null) {
             currentRoot = (Item) observable;
             subscribe(currentRoot);
-            viewGroup.removeAllViews();
             draw();
         } else {
             setChanged();
@@ -72,6 +74,7 @@ public class LibraryController extends Observable implements Observer {
     public void backPress() {
         if (currentRoot.getParent() != null) {
             currentRoot = currentRoot.getParent();
+            draw();
         }
     }
 }

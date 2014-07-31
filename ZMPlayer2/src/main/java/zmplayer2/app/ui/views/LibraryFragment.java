@@ -53,13 +53,6 @@ public class LibraryFragment extends Fragment implements Observer {
 
     private void initViews(View rootView) {
         viewGroup = (ViewGroup) rootView.findViewById(R.id.vg);
-        backBtn = (Button) rootView.findViewById(R.id.backBtn);
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                libraryController.backPress();
-            }
-        });
     }
 
     @Override

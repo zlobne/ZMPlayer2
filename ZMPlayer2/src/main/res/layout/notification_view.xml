@@ -15,18 +15,19 @@
         android:layout_height="@android:dimen/notification_large_icon_height">
         <LinearLayout
             android:orientation="vertical"
+            android:layout_marginLeft="10dp"
             android:layout_weight="2"
             android:layout_width="0dp"
             android:layout_height="@android:dimen/notification_large_icon_height">
             <TextView
                 android:id="@+id/artistName"
-                android:gravity="center"
+                android:gravity="center_vertical"
                 android:layout_weight="1"
                 android:layout_width="fill_parent"
                 android:layout_height="0dp" />
             <TextView
                 android:id="@+id/songName"
-                android:gravity="center"
+                android:gravity="center_vertical"
                 android:layout_weight="1"
                 android:layout_width="fill_parent"
                 android:ellipsize="end"

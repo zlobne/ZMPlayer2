@@ -2,22 +2,22 @@
 <pre-dex-items>
 
     <item
-        dex="/home/ololoev/projects/ZMPlayer2/ZMPlayer2/build/intermediates/pre-dexed/debug/gson-2.2.4-0664ff110f2a0b6a4f38ab4b7256e6def65b6463.jar"
-        jar="/home/ololoev/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.2.4/a60a5e993c98c864010053cb901b7eab25306568/gson-2.2.4.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="a60a5e993c98c864010053cb901b7eab25306568"/>
-    <item
-        dex="/home/ololoev/projects/ZMPlayer2/ZMPlayer2/build/intermediates/pre-dexed/debug/support-v4-19.1.0-974c75a51a853d2f2fe1e4cdb5164e7b7aa4f0f7.jar"
-        jar="/home/ololoev/android-studio/sdk/extras/android/m2repository/com/android/support/support-v4/19.1.0/support-v4-19.1.0.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
-    <item
         dex="/home/ololoev/projects/ZMPlayer2/ZMPlayer2/build/intermediates/pre-dexed/debug/crashlytics-1.1.11-dd21ec8d85127df6c2b24556a495be054a1a5689.jar"
         jar="/home/ololoev/.gradle/caches/modules-2/files-2.1/com.crashlytics.android/crashlytics/1.1.11/b8189e9eef2f07fae743e05d7fe7e69daebe98d1/crashlytics-1.1.11.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="b8189e9eef2f07fae743e05d7fe7e69daebe98d1"/>
+    <item
+        dex="/home/ololoev/projects/ZMPlayer2/ZMPlayer2/build/intermediates/pre-dexed/debug/support-v4-19.1.0-838cdc03d2d5949247e08605e255e9a61911a985.jar"
+        jar="/home/ololoev/android_studio/sdk/extras/android/m2repository/com/android/support/support-v4/19.1.0/support-v4-19.1.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
+    <item
+        dex="/home/ololoev/projects/ZMPlayer2/ZMPlayer2/build/intermediates/pre-dexed/debug/gson-2.2.4-0664ff110f2a0b6a4f38ab4b7256e6def65b6463.jar"
+        jar="/home/ololoev/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.2.4/a60a5e993c98c864010053cb901b7eab25306568/gson-2.2.4.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="a60a5e993c98c864010053cb901b7eab25306568"/>
 
 </pre-dex-items>
