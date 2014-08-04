@@ -6,7 +6,10 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BlurMaskFilter;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -226,7 +229,7 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
     }
 
     private void addImage(Bitmap bitmap) {
-        albumArt.setImageBitmap(bitmap);
+        albumArt.setImageBitmap(getBlurredBitmap(bitmap));
         int colorFrom = Color.TRANSPARENT;
         Drawable background = artContainer.getBackground();
         if (background instanceof ColorDrawable)
@@ -331,4 +334,36 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
                 greenBucket / pixelCount,
                 blueBucket / pixelCount);
     }
+
+    private Bitmap getBlurredBitmap(Bitmap src){
+        //TODO: make normal blur
+        int width = src.getWidth();
+        int height = src.getHeight();
+
+        float blurValue = 10f;
+
+        BlurMaskFilter blurMaskFilter;
+        Paint paintBlur = new Paint();
+
+        Bitmap dest = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(dest);
+
+//        //Create background in White
+//        Bitmap alpha = src.extractAlpha();
+//        paintBlur.setColor(0xFFFFFFFF);
+//        canvas.drawBitmap(alpha, 0, 0, paintBlur);
+//
+//        //Create outer blur, in White
+//        blurMaskFilter = new BlurMaskFilter(blurValue, BlurMaskFilter.Blur.OUTER);
+//        paintBlur.setMaskFilter(blurMaskFilter);
+//        canvas.drawBitmap(alpha, 0, 0, paintBlur);
+
+        //Create inner blur
+        blurMaskFilter = new BlurMaskFilter(blurValue, BlurMaskFilter.Blur.INNER);
+        paintBlur.setMaskFilter(blurMaskFilter);
+        canvas.drawBitmap(src, 0, 0, paintBlur);
+
+        return dest;
+    }
+
 }
