@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/artContainer"
+    android:animateLayoutChanges="true"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <ImageView
         android:id="@+id/albumArt"
-        android:orientation="horizontal"
         android:gravity="center"
-        android:animateLayoutChanges="true"
+        android:scaleType="fitCenter"
         android:layout_weight="4"
         android:layout_width="match_parent"
         android:layout_height="0dp" />
@@ -16,6 +17,7 @@
     <zmplayer2.app.ui.TickerTextView
         android:id="@+id/titleBar1"
         style="@style/Text.Big"
+        android:background="@color/white_transparent"
         android:gravity="center"
         android:ellipsize="marquee"
         android:focusable="true"
@@ -30,6 +32,7 @@
     <TextView
         android:id="@+id/titleBar2"
         style="@style/Text.Big.Italic"
+        android:background="@color/white_transparent"
         android:gravity="center"
         android:layout_weight="0.5"
         android:layout_width="match_parent"
@@ -38,6 +41,7 @@
     <LinearLayout
         android:layout_weight="1"
         android:layout_width="match_parent"
+        android:background="@color/white_transparent"
         android:layout_height="0dp">
         <ImageButton
             android:id="@+id/prevBtn"
@@ -69,7 +73,7 @@
     </LinearLayout>
     <SeekBar
         android:id="@+id/seekBar"
-        android:layout_marginTop="20dp"
+        android:background="@color/white_transparent"
         android:progressDrawable="@drawable/progressbar"
         android:thumb="@null"
         android:progress="0"
@@ -81,6 +85,7 @@
         android:indeterminate="false" />
     <LinearLayout
         android:layout_weight="0.5"
+        android:background="@color/white_transparent"
         android:layout_width="match_parent"
         android:layout_height="0dp">
         <TextView

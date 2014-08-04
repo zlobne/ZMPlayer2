@@ -35,9 +35,9 @@ public class GetBitmapTask extends AsyncTask<String, Void, Bitmap>{
         String albumArt = params[0];
 
         String fileName = "/cover";
-        if (params.length >= 4 && params[3] != null && !params[3].isEmpty()) {
-            fileName += params[3];
-        }
+//        if (params.length >= 4 && params[3] != null && !params[3].isEmpty()) {
+//            fileName += params[3];
+//        }
         fileName += ".jpg";
 
         if (albumArt == null || albumArt.isEmpty()) {
@@ -52,7 +52,7 @@ public class GetBitmapTask extends AsyncTask<String, Void, Bitmap>{
             size = Integer.valueOf(params[2]);
         }
 
-        Bitmap albumCover = BitmapFactory.decodeFile(params[0]);
+        Bitmap albumCover = BitmapFactory.decodeFile(albumArt);
         if (albumCover != null) {
             albumCover = Bitmap.createScaledBitmap(albumCover, size, size, true);
         }

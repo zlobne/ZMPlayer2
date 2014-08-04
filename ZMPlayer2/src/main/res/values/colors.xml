@@ -10,5 +10,6 @@
     <color name="zmp_orange">#FFFF8800</color>
     <color name="zmp_bright_orange">#FFFFBB33</color>
     <color name="background">#cccc</color>
+    <color name="white_transparent">#60FFFFFF</color>
 
 </resources>

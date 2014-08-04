@@ -1,6 +1,7 @@
 package zmplayer2.app.model;
 
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,7 @@ public class Album extends Item {
     public Bitmap getAlbumCover(int size) {
         GetBitmapTask task = new GetBitmapTask();
         try {
-            return task.execute(albumArt, ((Song) getChilds().get(0)).getSource(), String.valueOf(size), Utils.properName(getName())).get();
+            return task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, albumArt, ((Song) getChilds().get(0)).getSource(), String.valueOf(size), Utils.properName(getName())).get();
         } catch (Exception e) {
             e.printStackTrace();
             return null;

@@ -1,27 +1,23 @@
 package zmplayer2.app.ui.views;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.ToggleButton;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
 
 import java.io.File;
 import java.util.Observable;
@@ -30,9 +26,7 @@ import java.util.Observer;
 import zmplayer2.app.Core;
 import zmplayer2.app.R;
 import zmplayer2.app.model.Album;
-import zmplayer2.app.model.Song;
 import zmplayer2.app.net.DownloadTask;
-import zmplayer2.app.player.MusicPlayer;
 import zmplayer2.app.tools.Utils;
 import zmplayer2.app.ui.TickerTextView;
 import zmplayer2.app.ui.controllers.PlayerController;
@@ -45,7 +39,8 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
     private static final String ARG_SECTION_NUMBER = "section_number";
     private PlayerController playerController;
 
-    private ViewGroup albumArt;
+    private ImageView albumArt;
+    private ViewGroup artContainer;
     private TickerTextView titleBar1;
     private TextView titleBar2;
     private ImageButton prevBtn;
@@ -90,7 +85,6 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
     }
 
     private void updateImage() {
-        albumArt.removeAllViews();
         if (Core.instance().getPlayerService().getMusicPlayer().getSong() != null) {
             Bitmap albumCover = null;
             if (Core.instance().getPlayerService().getMusicPlayer().getSong().getParent() != null
@@ -105,10 +99,10 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
                 File song = new File(Core.instance().getPlayerService().getMusicPlayer().getSong().getSource());
 
                 String coverName = "/cover";
-                if (Core.instance().getPlayerService().getMusicPlayer().getSong().getAlbumName() != null
-                        && Core.instance().getPlayerService().getMusicPlayer().getSong().getAlbumName().isEmpty()) {
-                    coverName += Utils.properName(Core.instance().getPlayerService().getMusicPlayer().getSong().getAlbumName());
-                }
+//                if (Core.instance().getPlayerService().getMusicPlayer().getSong().getAlbumName() != null
+//                        && Core.instance().getPlayerService().getMusicPlayer().getSong().getAlbumName().isEmpty()) {
+//                    coverName += Utils.properName(Core.instance().getPlayerService().getMusicPlayer().getSong().getAlbumName());
+//                }
 
                 coverName += ".jpg";
 
@@ -175,7 +169,8 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
     }
 
     private void initViews(View view) {
-        albumArt = (ViewGroup) view.findViewById(R.id.albumArt);
+        albumArt = (ImageView) view.findViewById(R.id.albumArt);
+        artContainer = (ViewGroup) view.findViewById(R.id.artContainer);
         titleBar1 = (TickerTextView) view.findViewById(R.id.titleBar1);
         titleBar1.setSelected(true);
         titleBar2 = (TextView) view.findViewById(R.id.titleBar2);
@@ -231,11 +226,22 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
     }
 
     private void addImage(Bitmap bitmap) {
-        albumArt.removeAllViews();
-//        ImageView imageView = (ImageView) getActivity().getLayoutInflater().inflate(R.layout.album_view, null);
-        ImageView imageView = (ImageView) View.inflate(getActivity(), R.layout.album_view, null);
-        imageView.setImageBitmap(bitmap);
-        albumArt.addView(imageView);
+        albumArt.setImageBitmap(bitmap);
+        int colorFrom = Color.TRANSPARENT;
+        Drawable background = artContainer.getBackground();
+        if (background instanceof ColorDrawable)
+            colorFrom = ((ColorDrawable) background).getColor();
+        int colorTo = getDominantColor(bitmap);
+        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+            @Override
+            public void onAnimationUpdate(ValueAnimator animator) {
+                artContainer.setBackgroundColor((Integer) animator.getAnimatedValue());
+            }
+
+        });
+        colorAnimation.start();
     }
 
     @Override
@@ -292,5 +298,37 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
     @Override
     public void onProgressUpdate(DownloadTask.DownloadTaskState state) {
 
+    }
+
+    public static int getDominantColor(Bitmap bitmap) {
+        if (null == bitmap) return Color.TRANSPARENT;
+
+        int redBucket = 0;
+        int greenBucket = 0;
+        int blueBucket = 0;
+        int alphaBucket = 0;
+
+        boolean hasAlpha = bitmap.hasAlpha();
+        int pixelCount = bitmap.getWidth() * bitmap.getHeight();
+        int[] pixels = new int[pixelCount];
+        bitmap.getPixels(pixels, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());
+
+        for (int y = 0, h = bitmap.getHeight(); y < h; y++)
+        {
+            for (int x = 0, w = bitmap.getWidth(); x < w; x++)
+            {
+                int color = pixels[x + y * w]; // x + y * width
+                redBucket += (color >> 16) & 0xFF; // Color.red
+                greenBucket += (color >> 8) & 0xFF; // Color.greed
+                blueBucket += (color & 0xFF); // Color.blue
+                if (hasAlpha) alphaBucket += (color >>> 24); // Color.alpha
+            }
+        }
+
+        return Color.argb(
+                (hasAlpha) ? (alphaBucket / pixelCount) : 255,
+                redBucket / pixelCount,
+                greenBucket / pixelCount,
+                blueBucket / pixelCount);
     }
 }
