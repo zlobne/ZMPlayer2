@@ -3,8 +3,10 @@ package zmplayer2.app.receivers;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
 import zmplayer2.app.Core;
 import zmplayer2.app.player.MusicPlayer;
@@ -14,6 +16,8 @@ import zmplayer2.app.player.MusicPlayer;
  */
 public class RemoteControl extends BroadcastReceiver {
 
+    private final static String TAG = "ZMPRemoteControl";
+
     public RemoteControl() {
 
     }
@@ -22,21 +26,26 @@ public class RemoteControl extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         TelephonyManager tmgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         String action = intent.getAction();
+//        if (action.equals("android.media.AUDIO_BECOMING_NOISY")) {
+//            Core.instance().getPlayerService().getMusicPlayer().pause(MusicPlayer.HEADPHONES);
+//        }
         if ("android.intent.action.PHONE_STATE".equals(action)) {
             tmgr.listen(new ZMPhoneStateListener(), PhoneStateListener.LISTEN_CALL_STATE);
         }
 
-        if ("android.intent.action.HEADSET_PLUG".equals(action)) {
+        if (action.equals(Intent.ACTION_HEADSET_PLUG)) {
             boolean connectedHeadphones = (intent.getIntExtra("state", 0) == 1);
             if (connectedHeadphones) {
                 try {
                     Core.instance().getPlayerService().getMusicPlayer().play(MusicPlayer.HEADPHONES);
+                    Log.d(TAG, "headset plugged");
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }
             } else {
                 try {
                     Core.instance().getPlayerService().getMusicPlayer().pause(MusicPlayer.HEADPHONES);
+                    Log.d(TAG, "headset unplugged");
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }

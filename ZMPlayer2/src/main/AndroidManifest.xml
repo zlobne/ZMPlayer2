@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
+
     <application
         android:name="zmplayer2.app.MainApp"
         android:allowBackup="true"
@@ -28,15 +29,12 @@
         <receiver
             android:name=".receivers.RemoteControl">
             <intent-filter>
-                <action android:name="android.intent.action.PHONE_STATE" />
                 <action android:name="android.intent.action.HEADSET_PLUG" />
+                <action android:name="android.intent.action.PHONE_STATE" />
                 <action android:name="zmp.playPause" />
                 <action android:name="zmp.nextSong" />
             </intent-filter>
         </receiver>
-
-
-
 
         <service
             android:name=".service.PlayerService"

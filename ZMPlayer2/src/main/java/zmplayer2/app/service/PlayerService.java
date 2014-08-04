@@ -58,7 +58,7 @@ public class PlayerService extends Service implements Observer {
             musicPlayer.setSong(Library.instance(this).getFirstSong());
         }
 
-//        initReceivers();
+        initReceivers();
         sendNotif();
     }
 
@@ -94,13 +94,15 @@ public class PlayerService extends Service implements Observer {
 
     }
 
-//    private void initReceivers() {
-//        receiver = new RemoteControl(this);
-//        IntentFilter intentFilter = new IntentFilter();
-//        intentFilter.addAction("android.intent.action.PHONE_STATE");
-//        intentFilter.addAction("android.intent.action.HEADSET_PLUG");
-//        registerReceiver(receiver, intentFilter);
-//    }
+    private void initReceivers() {
+        receiver = new RemoteControl();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("android.intent.action.PHONE_STATE");
+        intentFilter.addAction("android.intent.action.HEADSET_PLUG");
+        intentFilter.addAction("zmp.playPause");
+        intentFilter.addAction("zmp.nextSong");
+        registerReceiver(receiver, intentFilter);
+    }
 
     private RemoteViews getNotification() {
         RemoteViews notificationView = new RemoteViews(getApplicationContext().getPackageName(), R.layout.notification_view);
