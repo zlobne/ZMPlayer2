@@ -13,7 +13,19 @@
         android:layout_weight="4"
         android:layout_width="match_parent"
         android:layout_height="0dp" />
-
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:background="@color/white_transparent"
+        android:progressDrawable="@drawable/progressbar_new"
+        android:thumb="@null"
+        android:progress="0"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:paddingBottom="33dp"
+        android:layout_margin="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:indeterminate="false" />
     <zmplayer2.app.ui.TickerTextView
         android:id="@+id/titleBar1"
         style="@style/Text.Big"
@@ -71,18 +83,7 @@
             android:background="@android:color/transparent"
             android:layout_height="match_parent" />
     </LinearLayout>
-    <SeekBar
-        android:id="@+id/seekBar"
-        android:background="@color/white_transparent"
-        android:progressDrawable="@drawable/progressbar"
-        android:thumb="@null"
-        android:progress="0"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
-        android:layout_weight="0.5"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:indeterminate="false" />
+
     <LinearLayout
         android:layout_weight="0.5"
         android:background="@color/white_transparent"
