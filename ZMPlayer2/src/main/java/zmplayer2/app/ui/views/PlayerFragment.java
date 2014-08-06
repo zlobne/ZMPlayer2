@@ -285,7 +285,7 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
             @Override
             public void run() {
                 try {
-                    addImage(BitmapFactory.decodeFile(filename));
+                    updateImage();
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }
