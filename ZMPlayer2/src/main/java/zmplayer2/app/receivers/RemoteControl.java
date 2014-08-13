@@ -9,6 +9,7 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import zmplayer2.app.Core;
+import zmplayer2.app.PreferenceManager;
 import zmplayer2.app.player.MusicPlayer;
 
 /**
@@ -33,7 +34,7 @@ public class RemoteControl extends BroadcastReceiver {
             tmgr.listen(new ZMPhoneStateListener(), PhoneStateListener.LISTEN_CALL_STATE);
         }
 
-        if (action.equals(Intent.ACTION_HEADSET_PLUG)) {
+        if (action.equals(Intent.ACTION_HEADSET_PLUG) && PreferenceManager.instance().isHeadphonesPauseEnabled()) {
             boolean connectedHeadphones = (intent.getIntExtra("state", 0) == 1);
             if (connectedHeadphones) {
                 try {
@@ -64,6 +65,11 @@ public class RemoteControl extends BroadcastReceiver {
 
     private class ZMPhoneStateListener extends PhoneStateListener {
         public void onCallStateChanged(int state, String incomingNumber) {
+
+            if (!PreferenceManager.instance().isCallPauseEnabled()) {
+                return;
+            }
+
             if (state == TelephonyManager.CALL_STATE_RINGING) {
                 try {
                     Core.instance().getPlayerService().getMusicPlayer().pause(MusicPlayer.CALL);

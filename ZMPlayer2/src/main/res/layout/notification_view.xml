@@ -22,6 +22,7 @@
             <TextView
                 android:id="@+id/artistName"
                 android:gravity="center_vertical"
+                android:textColor="@android:color/white"
                 android:layout_weight="1"
                 android:layout_width="fill_parent"
                 android:layout_height="0dp" />

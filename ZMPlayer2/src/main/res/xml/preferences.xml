@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/autopause" >
+        <CheckBoxPreference
+            android:title="@string/autopause_headphones"
+            android:key="@string/pref_autopause_headphones"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:title="@string/autopause_call"
+            android:key="@string/pref_autopause_call"
+            android:defaultValue="true" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/misc">
+        <CheckBoxPreference
+            android:title="@string/download_art"
+            android:key="@string/pref_download_art"
+            android:defaultValue="true" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

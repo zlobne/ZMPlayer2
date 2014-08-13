@@ -10,6 +10,11 @@
     <string name="albums">Albums</string>
     <string name="app_name">ZMPlayer2</string>
     <string name="artists">Artists</string>
+    <string name="autopause">Autopause</string>
+    <string name="autopause_call">Phone call</string>
+    <string name="autopause_headphones">Headphones detached</string>
+    <string name="download_art">Download album art</string>
+    <string name="misc">Misc</string>
     <string name="now_playing">Now playing</string>
     <string name="rescan">Rescan library</string>
     <string name="title_library">Library</string>
@@ -19,5 +24,11 @@
     <string name="tracks_count">tracks</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!--preferences strings-->
+    <string name="pref_autopause_call">autopause_call</string>
+    <string name="pref_autopause_headphones">autopause_headphones</string>
+    <string name="pref_download_art">download_art</string>
+    <string name="pref_last_song">last_song</string>
 
 </resources>

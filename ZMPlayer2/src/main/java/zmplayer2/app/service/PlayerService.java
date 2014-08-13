@@ -19,7 +19,6 @@ import java.util.Observer;
 
 import zmplayer2.app.Core;
 import zmplayer2.app.PreferenceManager;
-import zmplayer2.app.PreferencesConsts;
 import zmplayer2.app.R;
 import zmplayer2.app.model.Album;
 import zmplayer2.app.model.Library;
@@ -47,7 +46,7 @@ public class PlayerService extends Service implements Observer {
         musicPlayer = new MusicPlayer();
         musicPlayer.addObserver(this);
 
-        String lastSong = PreferenceManager.instance().getString(PreferencesConsts.LAST_SONG, "");
+        String lastSong = PreferenceManager.instance().getLastSong();
         Log.d("Search last song", lastSong);
         Song song = Library.instance(this).findSongByPath(lastSong);
 

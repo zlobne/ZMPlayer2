@@ -27,6 +27,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import zmplayer2.app.Core;
+import zmplayer2.app.PreferenceManager;
 import zmplayer2.app.R;
 import zmplayer2.app.model.Album;
 import zmplayer2.app.net.DownloadTask;
@@ -115,7 +116,7 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
 
                 if (coverArt.exists()) {
                     albumCover = BitmapFactory.decodeFile(coverArt.getAbsolutePath());
-                } else {
+                } else if (PreferenceManager.instance().isDownloadingArt()) {
                     playerController.downloadFile(filename, this);
                 }
             }

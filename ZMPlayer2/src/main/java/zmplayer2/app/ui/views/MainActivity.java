@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import android.app.ActionBar;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -118,16 +119,12 @@ public class MainActivity extends Activity
 
         switch (id) {
             case R.id.action_settings: {
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
                 break;
             }
 
             case R.id.action_rescan: {
                 Library.instance(this).rescan();
-                break;
-            }
-
-            case R.id.action_quit: {
-                System.exit(0);
                 break;
             }
         }

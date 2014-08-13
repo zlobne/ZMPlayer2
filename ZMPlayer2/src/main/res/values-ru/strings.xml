@@ -10,6 +10,11 @@
     <string name="albums">Альбомы</string>
     <string name="app_name">ZMPlayer2</string>
     <string name="artists">Исполнители</string>
+    <string name="autopause">Автопауза</string>
+    <string name="autopause_call">Телефонный звонок</string>
+    <string name="autopause_headphones">Отключение наушников</string>
+    <string name="download_art">Скачивать обложки альбомов</string>
+    <string name="misc">Разное</string>
     <string name="now_playing">Текущий трек</string>
     <string name="rescan">Обновить библиотеку</string>
     <string name="title_library">Библиотека</string>
