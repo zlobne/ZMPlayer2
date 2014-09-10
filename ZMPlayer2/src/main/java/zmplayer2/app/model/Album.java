@@ -97,7 +97,7 @@ public class Album extends Item {
                     cover.setImageBitmap(bitmap);
                 }
             }
-        }).execute(albumArt, ((Song) getChilds().get(0)).getSource(), "100", Utils.properName(getName()));
+        }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, albumArt, ((Song) getChilds().get(0)).getSource(), "100", Utils.properName(getName()));
 //        Bitmap albumCover = getAlbumCover(100);
 //
 //

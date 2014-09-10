@@ -52,9 +52,9 @@ public class PlayerService extends Service implements Observer {
 
         if (song != null) {
             Log.d("Search result", "" + song.toString());
-            musicPlayer.setSong(song);
+            musicPlayer.setSong(song, true);
         } else {
-            musicPlayer.setSong(Library.instance(this).getFirstSong());
+            musicPlayer.setSong(Library.instance(this).getFirstSong(), true);
         }
 
         initReceivers();

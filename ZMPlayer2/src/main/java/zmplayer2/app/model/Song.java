@@ -69,7 +69,7 @@ public class Song extends Item {
             public void onClick(View v) {
                 setChanged();
                 notifyObservers(1);
-                Core.instance().getPlayerService().getMusicPlayer().setSong(getSelf());
+                Core.instance().getPlayerService().getMusicPlayer().setSong(getSelf(), true);
                 Core.instance().getPlayerService().getMusicPlayer().play();
 //                MusicPlayer.instance().setSong(getSelf());
 //                MusicPlayer.instance().play();

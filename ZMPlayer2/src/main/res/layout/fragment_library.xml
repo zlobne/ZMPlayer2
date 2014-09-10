@@ -1,4 +1,5 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/refresh"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:animationCache="true"
@@ -14,4 +15,4 @@
             android:layout_height="wrap_content" />
     </ScrollView>
 
-</LinearLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

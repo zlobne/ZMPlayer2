@@ -4,7 +4,9 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -20,6 +23,7 @@ import java.util.Observable;
 
 import zmplayer2.app.Core;
 import zmplayer2.app.R;
+import zmplayer2.app.player.MusicPlayer;
 
 /**
  * Created by Anton Prozorov on 09.06.14.
@@ -100,8 +104,36 @@ public class Library extends Item {
     }
 
     public void rescan() {
+        final ArrayList<String> stringArrayList = listMusicFiles(Environment.getExternalStorageDirectory() + "/Music");
+
+        String[] strings = new String[stringArrayList.size()];
+        strings = stringArrayList.toArray(strings);
+
+        MediaScannerConnection.scanFile(context, strings, null, new MediaScannerConnection.MediaScannerConnectionClient() {
+            @Override
+            public void onMediaScannerConnected() {
+
+            }
+
+            @Override
+            public void onScanCompleted(String s, Uri uri) {
+                Log.d("yoba", s);
+                stringArrayList.remove(s);
+            }
+        });
+
+        while (!stringArrayList.isEmpty()) {
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
         self = new Library("Library root", null, context);
         self.createLibrary(context);
+        Core.instance().getPlayerService().getMusicPlayer().
+                setSong(findSongByPath(Core.instance().getPlayerService().getMusicPlayer().getSong().getSource()), false);
     }
 
     private void createArtists(Context context) {
@@ -246,5 +278,18 @@ public class Library extends Item {
         if (cursor != null) {
             cursor.close();
         }
+    }
+
+    private ArrayList<String> listMusicFiles(String dir) {
+        ArrayList<String> result = new ArrayList<String>();
+        File musicDir = new File(dir);
+        for (File file : musicDir.listFiles()) {
+            if (!file.isDirectory()) {
+                result.add(file.getAbsolutePath());
+            } else {
+                result.addAll(listMusicFiles(file.getAbsolutePath()));
+            }
+        }
+        return result;
     }
 }

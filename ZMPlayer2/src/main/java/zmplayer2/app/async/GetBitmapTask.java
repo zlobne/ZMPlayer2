@@ -3,6 +3,7 @@ package zmplayer2.app.async;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.io.File;
 
@@ -40,11 +41,13 @@ public class GetBitmapTask extends AsyncTask<String, Void, Bitmap>{
 //        }
         fileName += ".jpg";
 
-        if (albumArt == null || albumArt.isEmpty()) {
+        if (albumArt == null || albumArt.isEmpty() || !(new File(albumArt).exists())) {
             if (params.length >= 2 && params[1] != null && ! params[1].isEmpty()) {
                 albumArt = new File(params[1]).getParent() + fileName;
             }
         }
+
+        Log.d("yoba", albumArt);
 
         int size = 100;
 

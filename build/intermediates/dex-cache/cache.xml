@@ -2,11 +2,11 @@
 <pre-dex-items>
 
     <item
-        dex="/home/prozorov/projects/ZMPlayer2/ZMPlayer2/build/intermediates/pre-dexed/debug/crashlytics-1.1.11-95bab6ada198868ba6440f07c3aceaed8d7c4665.jar"
-        jar="/home/prozorov/.gradle/caches/modules-2/files-2.1/com.crashlytics.android/crashlytics/1.1.11/b8189e9eef2f07fae743e05d7fe7e69daebe98d1/crashlytics-1.1.11.jar"
+        dex="/home/prozorov/projects/ZMPlayer2/ZMPlayer2/build/intermediates/pre-dexed/debug/crashlytics-1.1.13-b08919906aa643e2a23a53c88f8f16e7fdd8ec12.jar"
+        jar="/home/prozorov/.gradle/caches/modules-2/files-2.1/com.crashlytics.android/crashlytics/1.1.13/e821eafa1bf489a26bdb71f95078c26785b37a1/crashlytics-1.1.13.jar"
         jumboMode="false"
-        revision="19.1.0"
-        sha1="b8189e9eef2f07fae743e05d7fe7e69daebe98d1"/>
+        revision="20.0.0"
+        sha1="0e821eafa1bf489a26bdb71f95078c26785b37a1"/>
     <item
         dex="/home/prozorov/projects/ZMPlayer2/ZMPlayer2/build/intermediates/pre-dexed/debug/internal_impl-20.0.0-1197116abec101e4d8366df2457d28bebb917e67.jar"
         jar="/home/prozorov/projects/ZMPlayer2/ZMPlayer2/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/libs/internal_impl-20.0.0.jar"
@@ -20,16 +20,16 @@
         revision="20.0.0"
         sha1="9d9013e9ff35fc3756411e62873c363c70c638fa"/>
     <item
-        dex="/home/prozorov/projects/ZMPlayer2/ZMPlayer2/build/intermediates/pre-dexed/debug/classes-68f26cd693acad66d92620cf09a0e91ab8e6754f.jar"
-        jar="/home/prozorov/projects/ZMPlayer2/ZMPlayer2/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/classes.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="8694693636ab36910c8100ce527c258ff3ebece0"/>
-    <item
         dex="/home/prozorov/projects/ZMPlayer2/ZMPlayer2/build/intermediates/pre-dexed/debug/gson-2.2.4-0c1a7a63e1dfd32fcceba6117001bff0edc9b0c9.jar"
         jar="/home/prozorov/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.2.4/a60a5e993c98c864010053cb901b7eab25306568/gson-2.2.4.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="a60a5e993c98c864010053cb901b7eab25306568"/>
+    <item
+        dex="/home/prozorov/projects/ZMPlayer2/ZMPlayer2/build/intermediates/pre-dexed/debug/classes-68f26cd693acad66d92620cf09a0e91ab8e6754f.jar"
+        jar="/home/prozorov/projects/ZMPlayer2/ZMPlayer2/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="8694693636ab36910c8100ce527c258ff3ebece0"/>
 
 </pre-dex-items>

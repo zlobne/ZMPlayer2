@@ -70,7 +70,7 @@ public class MusicPlayer extends Observable {
         return song;
     }
 
-    public void setSong(Song song) {
+    public void setSong(Song song, boolean prepare) {
         if (this.song == song || song == null) {
             return;
         }
@@ -80,14 +80,17 @@ public class MusicPlayer extends Observable {
             this.artist = album.getParent();
         }
         PreferenceManager.instance().setLastSong(song.getSource());
-        mediaPlayer.reset();
-        try {
-            mediaPlayer.setDataSource(song.getSource());
-            mediaPlayer.prepare();
-            setChanged();
-            notifyObservers();
-        } catch (IOException e) {
-            e.printStackTrace();
+
+        if (prepare) {
+            mediaPlayer.reset();
+            try {
+                mediaPlayer.setDataSource(song.getSource());
+                mediaPlayer.prepare();
+                setChanged();
+                notifyObservers();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -146,7 +149,7 @@ public class MusicPlayer extends Observable {
 
     public void nextSong(boolean forcePlay) {
         if (album.getChilds().indexOf(song) < album.getChilds().size() - 1) {
-            setSong((Song) album.getChilds().get(album.getChilds().indexOf(song) + 1));
+            setSong((Song) album.getChilds().get(album.getChilds().indexOf(song) + 1), true);
         } else {
             if (artist != null) {
                 nextAlbum(forcePlay);
@@ -162,7 +165,7 @@ public class MusicPlayer extends Observable {
 
     private void nextAlbum(boolean forcePlay) {
         if (artist.getChilds().indexOf(album) < artist.getChilds().size() - 1) {
-            setSong((Song) artist.getChilds().get(artist.getChilds().indexOf(album) + 1).getChilds().get(0));
+            setSong((Song) artist.getChilds().get(artist.getChilds().indexOf(album) + 1).getChilds().get(0), true);
         } else {
             if (artist.getParent() != null) {
                 nextArtist(forcePlay);
@@ -178,9 +181,9 @@ public class MusicPlayer extends Observable {
 
     private void nextArtist(boolean forcePlay) {
         if (artist.getParent().getChilds().indexOf(artist) < artist.getParent().getChilds().size() - 1) {
-            setSong((Song) artist.getParent().getChilds().get(artist.getParent().getChilds().indexOf(artist) + 1).getChilds().get(0).getChilds().get(0));
+            setSong((Song) artist.getParent().getChilds().get(artist.getParent().getChilds().indexOf(artist) + 1).getChilds().get(0).getChilds().get(0), true);
         } else {
-            setSong((Song) artist.getParent().getChilds().get(0).getChilds().get(0).getChilds().get(0));
+            setSong((Song) artist.getParent().getChilds().get(0).getChilds().get(0).getChilds().get(0), true);
         }
         if (forcePlay) {
             play();
@@ -191,7 +194,7 @@ public class MusicPlayer extends Observable {
 
     public void prevSong(boolean forcePlay) {
         if (album.getChilds().indexOf(song) > 0) {
-            setSong((Song) album.getChilds().get(album.getChilds().indexOf(song) - 1));
+            setSong((Song) album.getChilds().get(album.getChilds().indexOf(song) - 1), true);
         } else {
             if (artist != null) {
                 prevAlbum(forcePlay);
@@ -208,7 +211,7 @@ public class MusicPlayer extends Observable {
     private void prevAlbum(boolean forcePlay) {
         if (artist.getChilds().indexOf(album) > 0) {
             setSong((Song) artist.getChilds().get(artist.getChilds().indexOf(album) - 1) //prev album
-                    .getChilds().get(artist.getChilds().get(artist.getChilds().indexOf(album) - 1).getChilds().size() - 1)); //last song
+                    .getChilds().get(artist.getChilds().get(artist.getChilds().indexOf(album) - 1).getChilds().size() - 1), true); //last song
         } else {
             if (artist.getParent() != null) {
                 prevArtist(forcePlay);
@@ -229,12 +232,12 @@ public class MusicPlayer extends Observable {
             int prevTrack = artist.getParent().getChilds().get(prevArtist).getChilds().get(prevAlbum).getChilds().size() - 1;
             setSong((Song) artist.getParent().getChilds().get(prevArtist)
                     .getChilds().get(prevAlbum)
-                    .getChilds().get(prevTrack));
+                    .getChilds().get(prevTrack), true);
         } else {
             int lastArtist = artist.getParent().getChilds().size() - 1;
             int lastAlbum = artist.getParent().getChilds().get(lastArtist).getChilds().size() - 1;
             int lastSong = artist.getParent().getChilds().get(lastArtist).getChilds().get(lastAlbum).getChilds().size() - 1;
-            setSong((Song) artist.getParent().getChilds().get(lastArtist).getChilds().get(lastAlbum).getChilds().get(lastSong));
+            setSong((Song) artist.getParent().getChilds().get(lastArtist).getChilds().get(lastAlbum).getChilds().get(lastSong), true);
         }
         if (forcePlay) {
             play();

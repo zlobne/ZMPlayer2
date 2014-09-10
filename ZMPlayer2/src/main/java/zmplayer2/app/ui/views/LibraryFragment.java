@@ -2,7 +2,9 @@ package zmplayer2.app.ui.views;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,17 +15,19 @@ import java.util.Observer;
 
 import zmplayer2.app.R;
 import zmplayer2.app.model.Item;
+import zmplayer2.app.model.Library;
 import zmplayer2.app.ui.controllers.LibraryController;
 
 /**
  * Created by Anton Prozorov on 06.06.14.
  */
-public class LibraryFragment extends Fragment implements Observer {
+public class LibraryFragment extends Fragment implements Observer, SwipeRefreshLayout.OnRefreshListener {
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     private LayoutInflater inflater;
 
     private ViewGroup viewGroup;
+    private SwipeRefreshLayout refreshLayout;
     private Button backBtn;
 
     private LibraryController libraryController;
@@ -53,6 +57,9 @@ public class LibraryFragment extends Fragment implements Observer {
 
     private void initViews(View rootView) {
         viewGroup = (ViewGroup) rootView.findViewById(R.id.vg);
+        refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.refresh);
+        refreshLayout.setOnRefreshListener(this);
+        refreshLayout.setColorSchemeResources(android.R.color.holo_blue_dark, android.R.color.holo_green_dark, R.color.zmp_orange, android.R.color.holo_red_dark);
     }
 
     @Override
@@ -83,5 +90,24 @@ public class LibraryFragment extends Fragment implements Observer {
         if (o != null) {
             ((MainActivity) getActivity()).onNavigationDrawerItemSelected(1);
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected void onPostExecute(Void result) {
+                refreshLayout.setRefreshing(false);
+                libraryController = new LibraryController(viewGroup, inflater, getActivity().getApplicationContext());
+                libraryController.addObserver(LibraryFragment.this);
+                libraryController.draw();
+            }
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                Library.instance().rescan();
+                return null;
+            }
+        }.execute();
     }
 }
