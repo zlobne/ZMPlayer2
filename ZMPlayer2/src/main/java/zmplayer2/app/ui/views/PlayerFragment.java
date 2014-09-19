@@ -10,8 +10,11 @@ import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +24,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import com.androidquery.AQuery;
 
 import java.io.File;
 import java.util.Observable;
@@ -89,43 +94,56 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
     }
 
     private void updateImage() {
-        if (Core.instance().getPlayerService().getMusicPlayer().getSong() != null) {
-            Bitmap albumCover = null;
-            if (Core.instance().getPlayerService().getMusicPlayer().getSong().getParent() != null
-                    && Core.instance().getPlayerService().getMusicPlayer().getSong().getParent().getParent() != null) {
-                try {
-                    albumCover = ((Album) Core.instance().getPlayerService().getMusicPlayer().getSong().getParent()).getAlbumCover();
-                } catch (Exception e) {
-                    Log.d("ololo", e.getLocalizedMessage());
-                }
-            }
-            if (albumCover == null) {
-                File song = new File(Core.instance().getPlayerService().getMusicPlayer().getSong().getSource());
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (Core.instance().getPlayerService().getMusicPlayer().getSong() != null) {
+                    Bitmap albumCover = null;
+                    if (Core.instance().getPlayerService().getMusicPlayer().getSong().getParent() != null
+                            && Core.instance().getPlayerService().getMusicPlayer().getSong().getParent().getParent() != null) {
+                        try {
+                            albumCover = ((Album) Core.instance().getPlayerService().getMusicPlayer().getSong().getParent()).getAlbumCover();
+                        } catch (Exception e) {
+                            Log.d("ololo", e.getLocalizedMessage());
+                        }
+                    }
+                    if (albumCover == null) {
+                        File song = new File(Core.instance().getPlayerService().getMusicPlayer().getSong().getSource());
 
-                String coverName = "/cover";
+                        String coverName = "/cover";
 //                if (Core.instance().getPlayerService().getMusicPlayer().getSong().getAlbumName() != null
 //                        && Core.instance().getPlayerService().getMusicPlayer().getSong().getAlbumName().isEmpty()) {
 //                    coverName += Utils.properName(Core.instance().getPlayerService().getMusicPlayer().getSong().getAlbumName());
 //                }
 
-                coverName += ".jpg";
+                        coverName += ".jpg";
 
-                String filename = song.getParent() + coverName;
-                Log.d("ololo", "cover " + filename);
-                final File coverArt = new File(filename);
+                        String filename = song.getParent() + coverName;
+                        Log.d("ololo", "cover " + filename);
+                        final File coverArt = new File(filename);
 
-                if (coverArt.exists()) {
-                    albumCover = BitmapFactory.decodeFile(coverArt.getAbsolutePath());
-                } else if (PreferenceManager.instance().isDownloadingArt()) {
-                    playerController.downloadFile(filename, this);
+                        if (coverArt.exists()) {
+                            albumCover = BitmapFactory.decodeFile(coverArt.getAbsolutePath());
+                        } else if (PreferenceManager.instance().isDownloadingArt()) {
+                            playerController.downloadFile(filename, PlayerFragment.this);
+                        }
+                    }
+
+                    if (albumCover == null) {
+                        albumCover = Bitmap.createScaledBitmap(Core.instance().getDefaultArt(), 400, 400, true);
+                    }
+
+                    final Bitmap coverToShow = albumCover;
+
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            addImage(coverToShow);
+                        }
+                    });
                 }
             }
-
-            if (albumCover == null) {
-                albumCover = Bitmap.createScaledBitmap(Core.instance().getDefaultArt(), 400, 400, true);
-            }
-            addImage(albumCover);
-        }
+        }).start();
     }
 
     private void updateView(boolean updateImage) {
@@ -230,22 +248,38 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
     }
 
     private void addImage(Bitmap bitmap) {
-        albumArt.setImageBitmap(getBlurredBitmap(bitmap));
+//        albumArt.setImageBitmap(getBlurredBitmap(bitmap));
+        new AQuery(getActivity(), rootView).id(R.id.albumArt).image(bitmap);
         int colorFrom = Color.TRANSPARENT;
-        Drawable background = artContainer.getBackground();
-        if (background instanceof ColorDrawable)
-            colorFrom = ((ColorDrawable) background).getColor();
-        int colorTo = getDominantColor(bitmap);
-        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
-        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+//        Drawable background = artContainer.getBackground();
+//        if (background instanceof ColorDrawable)
+//            colorFrom = ((ColorDrawable) background).getColor();
+//        int colorTo = getDominantColor(bitmap);
+//        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+//        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+//
+//            @Override
+//            public void onAnimationUpdate(ValueAnimator animator) {
+//                artContainer.setBackgroundColor((Integer) animator.getAnimatedValue());
+//            }
+//
+//        });
+//        colorAnimation.start();
 
-            @Override
-            public void onAnimationUpdate(ValueAnimator animator) {
-                artContainer.setBackgroundColor((Integer) animator.getAnimatedValue());
-            }
+        if (artContainer.getBackground() == null) {
+            artContainer.setBackgroundColor(Color.TRANSPARENT);
+        }
 
-        });
-        colorAnimation.start();
+        GradientDrawable background = getDominantGradient(bitmap);
+
+        Drawable[] drawables = {artContainer.getBackground(), background};
+
+        TransitionDrawable transitionDrawable = new TransitionDrawable(drawables);
+
+        artContainer.setBackgroundDrawable(transitionDrawable);
+
+        transitionDrawable.startTransition(1000);
+
     }
 
     @Override
@@ -335,6 +369,70 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
                 redBucket / pixelCount,
                 greenBucket / pixelCount,
                 blueBucket / pixelCount);
+    }
+
+    public static GradientDrawable getDominantGradient(Bitmap bitmap) {
+        if (null == bitmap) {
+            int colors[] = {Color.TRANSPARENT};
+            return new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
+        }
+
+        int redBucketLeft = 0;
+        int greenBucketLeft = 0;
+        int blueBucketLeft = 0;
+        int alphaBucketLeft = 0;
+
+        int redBucketRight = 0;
+        int greenBucketRight = 0;
+        int blueBucketRight = 0;
+        int alphaBucketRight = 0;
+
+        boolean hasAlpha = bitmap.hasAlpha();
+        int pixelCount = bitmap.getWidth()/2 * bitmap.getHeight();
+        int[] pixelsLeft = new int[pixelCount];
+        bitmap.getPixels(pixelsLeft, 0, bitmap.getWidth()/2, 0, 0, bitmap.getWidth()/2, bitmap.getHeight());
+
+        for (int y = 0, h = bitmap.getHeight(); y < h; y++)
+        {
+            for (int x = 0, w = bitmap.getWidth()/2; x < w; x++)
+            {
+                int color = pixelsLeft[x + y * w]; // x + y * width
+                redBucketLeft += (color >> 16) & 0xFF; // Color.red
+                greenBucketLeft += (color >> 8) & 0xFF; // Color.greed
+                blueBucketLeft += (color & 0xFF); // Color.blue
+                if (hasAlpha) alphaBucketLeft += (color >>> 24); // Color.alpha
+            }
+        }
+
+        int[] pixelsRight = new int[pixelCount];
+        bitmap.getPixels(pixelsRight, 0, bitmap.getWidth()/2, bitmap.getWidth()/2, 0, bitmap.getWidth()/2, bitmap.getHeight());
+
+        for (int y = 0, h = bitmap.getHeight(); y < h; y++)
+        {
+            for (int x = 0, w = bitmap.getWidth()/2; x < w; x++)
+            {
+                int color = pixelsRight[x + y * w]; // x + y * width
+                redBucketRight += (color >> 16) & 0xFF; // Color.red
+                greenBucketRight += (color >> 8) & 0xFF; // Color.greed
+                blueBucketRight += (color & 0xFF); // Color.blue
+                if (hasAlpha) alphaBucketRight += (color >>> 24); // Color.alpha
+            }
+        }
+
+        int colorLeft = Color.argb(
+                (hasAlpha) ? (alphaBucketLeft / pixelCount) : 255,
+                redBucketLeft / pixelCount,
+                greenBucketLeft / pixelCount,
+                blueBucketLeft / pixelCount);
+
+        int colorRight = Color.argb(
+                (hasAlpha) ? (alphaBucketRight / pixelCount) : 255,
+                redBucketRight / pixelCount,
+                greenBucketRight / pixelCount,
+                blueBucketRight / pixelCount);
+
+        int colors[] = {colorLeft, colorRight};
+        return new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
     }
 
     private Bitmap getBlurredBitmap(Bitmap src){

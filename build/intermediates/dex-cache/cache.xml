@@ -2,6 +2,12 @@
 <pre-dex-items>
 
     <item
+        dex="/home/prozorov/projects/ZMPlayer2/ZMPlayer2/build/intermediates/pre-dexed/debug/android-query-0.25.9-19f99cb7a892ec82eb3be9864304bc5b5c7dd048.jar"
+        jar="/home/prozorov/.gradle/caches/modules-2/files-2.1/com.googlecode.android-query/android-query/0.25.9/fff82e4e1e56b60d6eb1d5487dbd3d3b526b635f/android-query-0.25.9.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="fff82e4e1e56b60d6eb1d5487dbd3d3b526b635f"/>
+    <item
         dex="/home/prozorov/projects/ZMPlayer2/ZMPlayer2/build/intermediates/pre-dexed/debug/crashlytics-1.1.13-b08919906aa643e2a23a53c88f8f16e7fdd8ec12.jar"
         jar="/home/prozorov/.gradle/caches/modules-2/files-2.1/com.crashlytics.android/crashlytics/1.1.13/e821eafa1bf489a26bdb71f95078c26785b37a1/crashlytics-1.1.13.jar"
         jumboMode="false"

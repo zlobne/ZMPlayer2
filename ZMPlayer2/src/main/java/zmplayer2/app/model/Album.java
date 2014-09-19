@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.androidquery.AQuery;
+
 import zmplayer2.app.Core;
 import zmplayer2.app.R;
 import zmplayer2.app.async.GetBitmapTask;
