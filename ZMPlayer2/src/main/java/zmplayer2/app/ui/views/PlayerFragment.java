@@ -1,5 +1,7 @@
 package zmplayer2.app.ui.views;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
@@ -22,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -34,6 +37,7 @@ import java.util.Observer;
 import zmplayer2.app.Core;
 import zmplayer2.app.PreferenceManager;
 import zmplayer2.app.R;
+import zmplayer2.app.async.GetBitmapTask;
 import zmplayer2.app.model.Album;
 import zmplayer2.app.net.DownloadTask;
 import zmplayer2.app.tools.Utils;
@@ -123,7 +127,7 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
                         final File coverArt = new File(filename);
 
                         if (coverArt.exists()) {
-                            albumCover = BitmapFactory.decodeFile(coverArt.getAbsolutePath());
+                            albumCover = GetBitmapTask.decodeSampledBitmapFromFile(coverArt.getAbsolutePath(), 400);
                         } else if (PreferenceManager.instance().isDownloadingArt()) {
                             playerController.downloadFile(filename, PlayerFragment.this);
                         }
@@ -134,6 +138,7 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
                     }
 
                     final Bitmap coverToShow = albumCover;
+
 
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
@@ -249,8 +254,10 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
 
     private void addImage(Bitmap bitmap) {
 //        albumArt.setImageBitmap(getBlurredBitmap(bitmap));
-        new AQuery(getActivity(), rootView).id(R.id.albumArt).image(bitmap);
-        int colorFrom = Color.TRANSPARENT;
+
+        new AQuery(getActivity(), rootView).id(R.id.albumArt).animate(android.R.anim.fade_in).image(getBlurredBitmap(bitmap));
+
+//        int colorFrom = Color.TRANSPARENT;
 //        Drawable background = artContainer.getBackground();
 //        if (background instanceof ColorDrawable)
 //            colorFrom = ((ColorDrawable) background).getColor();

@@ -20,6 +20,7 @@ import java.util.Observer;
 import zmplayer2.app.Core;
 import zmplayer2.app.PreferenceManager;
 import zmplayer2.app.R;
+import zmplayer2.app.async.GetBitmapTask;
 import zmplayer2.app.model.Album;
 import zmplayer2.app.model.Library;
 import zmplayer2.app.model.Song;
@@ -175,7 +176,8 @@ public class PlayerService extends Service implements Observer {
                 final File coverArt = new File(filename);
 
                 if (coverArt.exists()) {
-                    albumCover = BitmapFactory.decodeFile(coverArt.getAbsolutePath());
+//                    albumCover = BitmapFactory.decodeFile(coverArt.getAbsolutePath());
+                    albumCover = GetBitmapTask.decodeSampledBitmapFromFile(coverArt.getAbsolutePath(), 100);
                 }
             }
 

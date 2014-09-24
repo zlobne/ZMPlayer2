@@ -62,6 +62,10 @@ public class MusicPlayer extends Observable {
         return song.getDuration();
     }
 
+    public MediaPlayer getMediaPlayer() {
+        return mediaPlayer;
+    }
+
     public long getCurrentPosition() {
         return mediaPlayer.getCurrentPosition();
     }
