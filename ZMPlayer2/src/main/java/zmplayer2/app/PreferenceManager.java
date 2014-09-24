@@ -62,7 +62,7 @@ public class PreferenceManager {
         if (sharedPreferences != null) {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putInt(key, value);
-            editor.commit();
+            editor.apply();
         }
     }
 
@@ -70,7 +70,7 @@ public class PreferenceManager {
         if (sharedPreferences != null) {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean(key, value);
-            editor.commit();
+            editor.apply();
         }
     }
 
@@ -78,7 +78,7 @@ public class PreferenceManager {
         if (sharedPreferences != null) {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putFloat(key, value);
-            editor.commit();
+            editor.apply();
         }
     }
 
@@ -86,7 +86,7 @@ public class PreferenceManager {
         if (sharedPreferences != null) {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putLong(key, value);
-            editor.commit();
+            editor.apply();
         }
     }
 
@@ -94,7 +94,7 @@ public class PreferenceManager {
         if (sharedPreferences != null) {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString(key, value);
-            editor.commit();
+            editor.apply();
         }
     }
 
@@ -102,7 +102,7 @@ public class PreferenceManager {
         if (sharedPreferences != null) {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putStringSet(key, value);
-            editor.commit();
+            editor.apply();
         }
     }
 

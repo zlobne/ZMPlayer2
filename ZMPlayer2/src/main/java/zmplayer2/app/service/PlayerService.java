@@ -134,7 +134,6 @@ public class PlayerService extends Service implements Observer {
 
         Intent intent = new Intent(this, MainActivity.class);
         PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        builder.setPriority(Notification.PRIORITY_MAX);
 
         if (getMusicPlayer().getSong() == null) {
             builder.setContentIntent(pIntent);

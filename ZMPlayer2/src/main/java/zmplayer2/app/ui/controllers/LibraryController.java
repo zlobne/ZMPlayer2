@@ -20,8 +20,6 @@ import zmplayer2.app.ui.views.MainActivity;
 
 public class LibraryController extends Observable implements Observer {
 
-    private Context context;
-
     private ViewGroup viewGroup;
     private LayoutInflater inflater;
 
@@ -30,7 +28,6 @@ public class LibraryController extends Observable implements Observer {
     public LibraryController(ViewGroup viewGroup, LayoutInflater inflater, Context context) {
         this.viewGroup = viewGroup;
         this.inflater = inflater;
-        this.context = context;
 
         currentRoot = Library.instance(context);
 

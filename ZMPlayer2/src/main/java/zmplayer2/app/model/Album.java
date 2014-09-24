@@ -22,7 +22,6 @@ public class Album extends Item {
 
     private String albumArt;
     private String artistName;
-//    private Bitmap albumCover;
 
     public Album(String name, Item parent) {
         super(name, parent);
@@ -41,28 +40,10 @@ public class Album extends Item {
             e.printStackTrace();
             return null;
         }
-//        return albumCover;
     }
 
     public Bitmap getAlbumCover() {
         return getAlbumCover(400);
-    }
-
-//    public void setAlbumCover(Bitmap albumCover) {
-//        this.albumCover = albumCover;
-//    }
-
-    public void findAlbumCover() {
-//        if (albumArt == null || albumArt.isEmpty()) {
-//            if (getChilds() != null && ! getChilds().isEmpty()) {
-//                albumArt = new File(((Song) getChilds().get(0)).getSource()).getParent() + "/cover.jpg";
-//            }
-//        }
-//
-//        albumCover = BitmapFactory.decodeFile(albumArt);
-//        if (albumCover != null) {
-//            albumCover = Bitmap.createScaledBitmap(albumCover, 400, 400, true);
-//        }
     }
 
     public void setArtistName(String artistName) {
@@ -100,12 +81,6 @@ public class Album extends Item {
                 }
             }
         }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, albumArt, ((Song) getChilds().get(0)).getSource(), "100", Utils.properName(getName()));
-//        Bitmap albumCover = getAlbumCover(100);
-//
-//
-//        if (albumCover != null) {
-//            cover.setImageBitmap(albumCover);
-//        }
 
         viewGroup.addView(view);
     }

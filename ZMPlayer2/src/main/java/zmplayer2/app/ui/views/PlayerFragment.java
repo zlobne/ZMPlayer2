@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Bitmap;
@@ -52,7 +53,6 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
     private static final String ARG_SECTION_NUMBER = "section_number";
     private PlayerController playerController;
 
-    private ImageView albumArt;
     private ViewGroup artContainer;
     private TickerTextView titleBar1;
     private TextView titleBar2;
@@ -196,7 +196,6 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
     }
 
     private void initViews(View view) {
-        albumArt = (ImageView) view.findViewById(R.id.albumArt);
         artContainer = (ViewGroup) view.findViewById(R.id.artContainer);
         titleBar1 = (TickerTextView) view.findViewById(R.id.titleBar1);
         titleBar1.setSelected(true);
@@ -253,31 +252,14 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
     }
 
     private void addImage(Bitmap bitmap) {
-//        albumArt.setImageBitmap(getBlurredBitmap(bitmap));
 
-        new AQuery(getActivity(), rootView).id(R.id.albumArt).animate(android.R.anim.fade_in).image(getBlurredBitmap(bitmap));
-
-//        int colorFrom = Color.TRANSPARENT;
-//        Drawable background = artContainer.getBackground();
-//        if (background instanceof ColorDrawable)
-//            colorFrom = ((ColorDrawable) background).getColor();
-//        int colorTo = getDominantColor(bitmap);
-//        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
-//        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-//
-//            @Override
-//            public void onAnimationUpdate(ValueAnimator animator) {
-//                artContainer.setBackgroundColor((Integer) animator.getAnimatedValue());
-//            }
-//
-//        });
-//        colorAnimation.start();
+        new AQuery(getActivity(), rootView).id(R.id.albumArt).animate(android.R.anim.fade_in).image(Utils.getBlurredBitmap(bitmap));
 
         if (artContainer.getBackground() == null) {
             artContainer.setBackgroundColor(Color.TRANSPARENT);
         }
 
-        GradientDrawable background = getDominantGradient(bitmap);
+        GradientDrawable background = Utils.getDominantGradient(bitmap);
 
         Drawable[] drawables = {artContainer.getBackground(), background};
 
@@ -323,7 +305,6 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
 
     @Override
     public void onDownloadTaskComplete(DownloadTask.DownloadTaskState state) {
-        final String filename = state.getNameFile();
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -344,133 +325,6 @@ public class PlayerFragment extends Fragment implements Observer, DownloadTask.D
     @Override
     public void onProgressUpdate(DownloadTask.DownloadTaskState state) {
 
-    }
-
-    public static int getDominantColor(Bitmap bitmap) {
-        if (null == bitmap) return Color.TRANSPARENT;
-
-        int redBucket = 0;
-        int greenBucket = 0;
-        int blueBucket = 0;
-        int alphaBucket = 0;
-
-        boolean hasAlpha = bitmap.hasAlpha();
-        int pixelCount = bitmap.getWidth() * bitmap.getHeight();
-        int[] pixels = new int[pixelCount];
-        bitmap.getPixels(pixels, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());
-
-        for (int y = 0, h = bitmap.getHeight(); y < h; y++)
-        {
-            for (int x = 0, w = bitmap.getWidth(); x < w; x++)
-            {
-                int color = pixels[x + y * w]; // x + y * width
-                redBucket += (color >> 16) & 0xFF; // Color.red
-                greenBucket += (color >> 8) & 0xFF; // Color.greed
-                blueBucket += (color & 0xFF); // Color.blue
-                if (hasAlpha) alphaBucket += (color >>> 24); // Color.alpha
-            }
-        }
-
-        return Color.argb(
-                (hasAlpha) ? (alphaBucket / pixelCount) : 255,
-                redBucket / pixelCount,
-                greenBucket / pixelCount,
-                blueBucket / pixelCount);
-    }
-
-    public static GradientDrawable getDominantGradient(Bitmap bitmap) {
-        if (null == bitmap) {
-            int colors[] = {Color.TRANSPARENT};
-            return new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
-        }
-
-        int redBucketLeft = 0;
-        int greenBucketLeft = 0;
-        int blueBucketLeft = 0;
-        int alphaBucketLeft = 0;
-
-        int redBucketRight = 0;
-        int greenBucketRight = 0;
-        int blueBucketRight = 0;
-        int alphaBucketRight = 0;
-
-        boolean hasAlpha = bitmap.hasAlpha();
-        int pixelCount = bitmap.getWidth()/2 * bitmap.getHeight();
-        int[] pixelsLeft = new int[pixelCount];
-        bitmap.getPixels(pixelsLeft, 0, bitmap.getWidth()/2, 0, 0, bitmap.getWidth()/2, bitmap.getHeight());
-
-        for (int y = 0, h = bitmap.getHeight(); y < h; y++)
-        {
-            for (int x = 0, w = bitmap.getWidth()/2; x < w; x++)
-            {
-                int color = pixelsLeft[x + y * w]; // x + y * width
-                redBucketLeft += (color >> 16) & 0xFF; // Color.red
-                greenBucketLeft += (color >> 8) & 0xFF; // Color.greed
-                blueBucketLeft += (color & 0xFF); // Color.blue
-                if (hasAlpha) alphaBucketLeft += (color >>> 24); // Color.alpha
-            }
-        }
-
-        int[] pixelsRight = new int[pixelCount];
-        bitmap.getPixels(pixelsRight, 0, bitmap.getWidth()/2, bitmap.getWidth()/2, 0, bitmap.getWidth()/2, bitmap.getHeight());
-
-        for (int y = 0, h = bitmap.getHeight(); y < h; y++)
-        {
-            for (int x = 0, w = bitmap.getWidth()/2; x < w; x++)
-            {
-                int color = pixelsRight[x + y * w]; // x + y * width
-                redBucketRight += (color >> 16) & 0xFF; // Color.red
-                greenBucketRight += (color >> 8) & 0xFF; // Color.greed
-                blueBucketRight += (color & 0xFF); // Color.blue
-                if (hasAlpha) alphaBucketRight += (color >>> 24); // Color.alpha
-            }
-        }
-
-        int colorLeft = Color.argb(
-                (hasAlpha) ? (alphaBucketLeft / pixelCount) : 255,
-                redBucketLeft / pixelCount,
-                greenBucketLeft / pixelCount,
-                blueBucketLeft / pixelCount);
-
-        int colorRight = Color.argb(
-                (hasAlpha) ? (alphaBucketRight / pixelCount) : 255,
-                redBucketRight / pixelCount,
-                greenBucketRight / pixelCount,
-                blueBucketRight / pixelCount);
-
-        int colors[] = {colorLeft, colorRight};
-        return new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
-    }
-
-    private Bitmap getBlurredBitmap(Bitmap src){
-        //TODO: make normal blur
-        int width = src.getWidth();
-        int height = src.getHeight();
-
-        float blurValue = 10f;
-
-        BlurMaskFilter blurMaskFilter;
-        Paint paintBlur = new Paint();
-
-        Bitmap dest = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(dest);
-
-//        //Create background in White
-//        Bitmap alpha = src.extractAlpha();
-//        paintBlur.setColor(0xFFFFFFFF);
-//        canvas.drawBitmap(alpha, 0, 0, paintBlur);
-//
-//        //Create outer blur, in White
-//        blurMaskFilter = new BlurMaskFilter(blurValue, BlurMaskFilter.Blur.OUTER);
-//        paintBlur.setMaskFilter(blurMaskFilter);
-//        canvas.drawBitmap(alpha, 0, 0, paintBlur);
-
-        //Create inner blur
-        blurMaskFilter = new BlurMaskFilter(blurValue, BlurMaskFilter.Blur.INNER);
-        paintBlur.setMaskFilter(blurMaskFilter);
-        canvas.drawBitmap(src, 0, 0, paintBlur);
-
-        return dest;
     }
 
 }
